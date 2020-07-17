@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>EPiServer.Labs.ProjectEnhancements</id>
+    <version>$version$</version>
+    <title>EPiServer.Labs.ProjectEnhancements</title>
+    <authors>EPiServer AB</authors>
+    <owners>EPiServer</owners>
+    <iconUrl>http://www.episerver.com/Framework/Styles/Images/Products/Content.png</iconUrl>
+    <projectUrl>http://www.episerver.com/web-content-management/</projectUrl>
+    <licenseUrl>http://www.episerver.com/eula/</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Episerver project enhancements package</description>
+    <copyright>Copyright 2020</copyright>
+    <tags>project enhancements labs</tags>
+    <dependencies>
+      <dependency id="EPiServer.CMS.Core" version="[11.10.0,12.0)" />
+      <dependency id="EPiServer.CMS.UI" version="[11.11.0,12.0)" />
+      <dependency id="EPiServer.Telemetry.UI" version="[1.0.7,2.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src\AlloyMvcTemplates\modules\_protected\episerver-labs-project-enhancements\episerver-labs-project-enhancements.zip" target="content\modules\_protected\episerver-labs-project-enhancements\" />
+    <file src="src\AlloyMvcTemplates\modules\_protected\episerver-labs-project-enhancements\web.config" target="content\modules\_protected\episerver-labs-project-enhancements\" />
+    <file src="build\packaging\web.config.transform" target="content" />
+  </files>
+</package>
