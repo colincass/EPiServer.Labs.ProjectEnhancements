@@ -428,12 +428,13 @@
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="ClientResources\Images\icons\layoutIcons24x24.png" />
-    <Content Include="ClientResources\Scripts\Editors\StringList.js" />    
+    <Content Include="ClientResources\Scripts\Editors\StringList.js" />
     <Content Include="ClientResources\Styles\LayoutIcons.css" />
     <Content Include="EpiserverLog.config" />
     <Content Include="favicon.ico" />
     <Content Include="libman.json" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\initializer.js" />
+    <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-selector-initialization.js" />
     <Content Include="modules\_protected\episerver-telemetry-ui\episerver-telemetry-ui.zip" />
     <Content Include="Resources\LanguageFiles\PropertyNames_sv.xml">
       <SubType>Designer</SubType>

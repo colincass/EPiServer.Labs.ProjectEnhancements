@@ -1,13 +1,17 @@
 define([
     "dojo/_base/declare",
-    "epi/_Module"
+    "epi/_Module",
+    "./project-selector-initialization"
 ], function (
     declare,
-    _Module
+    _Module,
+    projectSelectorInitialization
 ) {
     return declare([_Module], {
         initialize: function () {
             this.inherited(arguments);
+
+            projectSelectorInitialization();
         }
     });
 });
