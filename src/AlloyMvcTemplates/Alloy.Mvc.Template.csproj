@@ -435,6 +435,7 @@
     <Content Include="libman.json" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\initializer.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-selector-initialization.js" />
+    <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\rename-project-command-initializer.js" />
     <Content Include="modules\_protected\episerver-telemetry-ui\episerver-telemetry-ui.zip" />
     <Content Include="Resources\LanguageFiles\PropertyNames_sv.xml">
       <SubType>Designer</SubType>
