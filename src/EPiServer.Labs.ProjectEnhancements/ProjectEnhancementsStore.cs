@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 using EPiServer.ServiceLocation;
 
@@ -19,7 +20,11 @@ namespace EPiServer.Labs.ProjectEnhancements
 
     public class ProjectSettings
     {
-        public int Id { get; set; }
+        public Identity Id { get; set; }
+
+        [EPiServerDataIndex]
+        public int ProjectId { get; set; }
+
         public string Description { get; set; }
         public string Category { get; set; }
         public string Color { get; set; }
@@ -43,9 +48,9 @@ namespace EPiServer.Labs.ProjectEnhancements
         {
             lock (_lock)
             {
-                var approvalReview = LoadApprovalReview(projectId) ?? new ProjectSettings
+                var approvalReview = LoadProjectSettings(projectId) ?? new ProjectSettings
                 {
-                    Id = projectId
+                    ProjectId = projectId
                 };
                 approvalReview.Description = projectSettings.Description;
                 approvalReview.Color = projectSettings.Color;
@@ -58,7 +63,7 @@ namespace EPiServer.Labs.ProjectEnhancements
 
         public ProjectSettings Load(int projectId)
         {
-            return LoadApprovalReview(projectId);
+            return LoadProjectSettings(projectId);
         }
 
         public IEnumerable<ProjectSettings> LoadAll()
@@ -70,7 +75,7 @@ namespace EPiServer.Labs.ProjectEnhancements
         {
             lock (_lock)
             {
-                var settings = LoadApprovalReview(projectId);
+                var settings = LoadProjectSettings(projectId);
                 if (settings == null)
                 {
                     return;
@@ -80,9 +85,9 @@ namespace EPiServer.Labs.ProjectEnhancements
             }
         }
 
-        private ProjectSettings LoadApprovalReview(int projectId)
+        private ProjectSettings LoadProjectSettings(int projectId)
         {
-            return GetStore().Items<ProjectSettings>().FirstOrDefault(x => x.Id == projectId);
+            return GetStore().Items<ProjectSettings>().FirstOrDefault(x => x.ProjectId == projectId);
         }
 
         private DynamicDataStore GetStore()

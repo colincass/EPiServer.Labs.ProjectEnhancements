@@ -14,11 +14,15 @@ namespace EPiServer.Labs.ProjectEnhancements
     {
         private readonly ProjectRepository _projectRepository;
         private readonly ViewModelConverter _viewModelConverter;
+        private readonly IProjectEnhancementsStore _projectEnhancementsStore;
 
-        public ExtendedProjectStore(ProjectRepository projectRepository, ViewModelConverter viewModelConverter)
+        public ExtendedProjectStore(ProjectRepository projectRepository,
+            ViewModelConverter viewModelConverter,
+            IProjectEnhancementsStore projectEnhancementsStore)
         {
             _projectRepository = projectRepository;
             _viewModelConverter = viewModelConverter;
+            _projectEnhancementsStore = projectEnhancementsStore;
         }
 
         [HttpGet]
@@ -29,11 +33,12 @@ namespace EPiServer.Labs.ProjectEnhancements
             {
                 // Load all the items in order to apply sorting.
                 var result = _projectRepository.List(0, int.MaxValue, out var totalCount);
-                var projects = result.Select(_viewModelConverter.ToViewModel);
+                var projects = result.Select(_viewModelConverter.ToViewModel).ToList();
+                AddExtendedFields(projects);
 
                 if (sortColumns != null)
                 {
-                    projects = projects.AsQueryable().OrderBy(sortColumns);
+                    projects = projects.AsQueryable().OrderBy(sortColumns).ToList();
                 }
 
                 return Rest(projects, range);
@@ -47,7 +52,33 @@ namespace EPiServer.Labs.ProjectEnhancements
                 return new RestStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            return Rest(_viewModelConverter.ToViewModel(project));
+            var extendedProjectViewModel = _viewModelConverter.ToViewModel(project);
+            AddExtendedFields(extendedProjectViewModel);
+            return Rest(extendedProjectViewModel);
+        }
+
+        private void AddExtendedFields(ExtendedProjectViewModel project)
+        {
+            var projectSettings = _projectEnhancementsStore.Load(project.Id);
+            if (projectSettings == null)
+            {
+                return;
+            }
+
+            project.Description = projectSettings.Description;
+        }
+
+        private void AddExtendedFields(IReadOnlyCollection<ExtendedProjectViewModel> projects)
+        {
+            var settings = _projectEnhancementsStore.LoadAll().ToList();
+            foreach (var extendedProjectViewModel in projects)
+            {
+                var projectSettings = settings.FirstOrDefault(x=>x.ProjectId == extendedProjectViewModel.Id);
+                if (projectSettings != null)
+                {
+                    extendedProjectViewModel.Description = projectSettings.Description;
+                }
+            }
         }
 
         public virtual ActionResult Put(int? id, ExtendedProjectViewModel projectViewModel)
@@ -72,11 +103,16 @@ namespace EPiServer.Labs.ProjectEnhancements
                 };
             }
 
-            //TODO: remove this code
-            System.Web.HttpContext.Current.Cache["project____" + id.Value] = projectViewModel.Description;
+            var projectSettings = new ProjectSettings
+            {
+                Description = projectViewModel.Description
+            };
+            _projectEnhancementsStore.Save(id.Value, projectSettings);
 
             _projectRepository.Save(_viewModelConverter.ToProject(projectViewModel));
-            return new RestStatusCodeResult(HttpStatusCode.OK) {Data = _viewModelConverter.ToViewModel(project)};
+            var extendedProjectViewModel = _viewModelConverter.ToViewModel(project);
+            AddExtendedFields(extendedProjectViewModel);
+            return new RestStatusCodeResult(HttpStatusCode.OK) {Data = extendedProjectViewModel};
         }
 
         [HttpPost]
@@ -94,8 +130,10 @@ namespace EPiServer.Labs.ProjectEnhancements
 
                 //TODO: remove this code
                 System.Web.HttpContext.Current.Cache["project____" + projectViewModel.Id] = projectViewModel.Description;
-                
-                return new RestStatusCodeResult(HttpStatusCode.Created) { Data = _viewModelConverter.ToViewModel(project) };
+
+                var extendedProjectViewModel = _viewModelConverter.ToViewModel(project);
+                AddExtendedFields(extendedProjectViewModel);
+                return new RestStatusCodeResult(HttpStatusCode.Created) { Data = extendedProjectViewModel };
             }
             catch (EPiServerException e)
             {

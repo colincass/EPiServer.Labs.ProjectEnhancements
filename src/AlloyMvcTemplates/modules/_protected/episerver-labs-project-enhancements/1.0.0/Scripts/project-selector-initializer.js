@@ -13,6 +13,7 @@ define([
             if (item.description) {
                 var descriptionEl = document.createElement("div");
                 descriptionEl.classList.add("epi-selector-list__description", "dojoxEllipsis");
+                descriptionEl.title = item.description;
                 var descriptionTextEl = document.createTextNode(item.description);
                 descriptionEl.appendChild(descriptionTextEl);
 

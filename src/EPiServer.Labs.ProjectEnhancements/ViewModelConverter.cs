@@ -18,7 +18,10 @@ namespace EPiServer.Labs.ProjectEnhancements
 
         public const string NoAccesKey = "_nopublishaccess";
 
-        public ViewModelConverter(ProjectRepository projectRepository, IContentLoader contentLoader, ContentLoaderService contentLoaderService)
+        public ViewModelConverter(ProjectRepository projectRepository,
+            IContentLoader contentLoader,
+            ContentLoaderService contentLoaderService,
+            IProjectEnhancementsStore projectEnhancementsStore)
         {
             _contentLoaderService = contentLoaderService;
             _projectRepository = projectRepository;
@@ -36,7 +39,6 @@ namespace EPiServer.Labs.ProjectEnhancements
                 CreatedBy = project.CreatedBy,
                 DelayPublishUntil = project.DelayPublishUntil,
                 ItemStatusCount = GetStatusCount(project.ID),
-                Description = System.Web.HttpContext.Current.Cache["project____" + project.ID] as string //TODO: remove this code
             };
         }
 
