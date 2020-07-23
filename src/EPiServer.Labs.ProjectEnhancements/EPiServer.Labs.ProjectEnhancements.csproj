@@ -162,6 +162,7 @@
     <Compile Include="..\..\version.cs">
       <Link>Properties\version.cs</Link>
     </Compile>
+    <Compile Include="ProjectEnhancementsStore.cs" />
     <Compile Include="ExtendedProjectStore.cs" />
     <Compile Include="ExtendedProjectViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
