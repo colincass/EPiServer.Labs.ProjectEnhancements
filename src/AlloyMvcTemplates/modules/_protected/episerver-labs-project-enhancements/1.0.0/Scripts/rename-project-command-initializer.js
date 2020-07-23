@@ -5,6 +5,8 @@ define([
     RenameProject,
     actionStrings
 ) {
+    // Rename "Rename" command to "Edit"
+
     return function () {
         RenameProject.prototype.label = actionStrings.edit;
         RenameProject.prototype.iconClass = "epi-iconPen";

@@ -1,20 +1,29 @@
 define([
     "dojo/_base/declare",
     "epi/_Module",
-    "./project-selector-initialization",
-    "./rename-project-command-initializer"
+    "./store-initializer",
+    "./project-selector-initializer",
+    "./rename-project-command-initializer",
+    "./project-dialog-content-initializer",
+    "./project-mode-toolbar-view-model-initializer"
 ], function (
     declare,
     _Module,
-    projectSelectorInitialization,
-    renameProjectCommandInitializer
+    storeInitializer,
+    projectSelectorInitializer,
+    renameProjectCommandInitializer,
+    projectDialogContentInitializer,
+    projectModeToolbarViewModelInitializer
 ) {
     return declare([_Module], {
         initialize: function () {
             this.inherited(arguments);
 
-            projectSelectorInitialization();
+            storeInitializer();
+            projectSelectorInitializer();
             renameProjectCommandInitializer();
+            projectDialogContentInitializer();
+            projectModeToolbarViewModelInitializer();
         }
     });
 });
