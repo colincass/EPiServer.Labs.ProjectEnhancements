@@ -5,7 +5,8 @@ define([
     "./project-selector-initializer",
     "./rename-project-command-initializer",
     "./project-dialog-content-initializer",
-    "./project-mode-toolbar-view-model-initializer"
+    "./project-mode-toolbar-view-model-initializer",
+    "./project-notification-initializer"
 ], function (
     declare,
     _Module,
@@ -13,7 +14,8 @@ define([
     projectSelectorInitializer,
     renameProjectCommandInitializer,
     projectDialogContentInitializer,
-    projectModeToolbarViewModelInitializer
+    projectModeToolbarViewModelInitializer,
+    projectNotificationInitializer
 ) {
     return declare([_Module], {
         initialize: function () {
@@ -24,6 +26,7 @@ define([
             renameProjectCommandInitializer();
             projectDialogContentInitializer();
             projectModeToolbarViewModelInitializer();
+            projectNotificationInitializer();
         }
     });
 });
