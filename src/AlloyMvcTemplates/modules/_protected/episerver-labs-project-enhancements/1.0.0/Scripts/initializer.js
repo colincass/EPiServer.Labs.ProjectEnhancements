@@ -3,16 +3,18 @@ define([
     "epi/_Module",
     "./store-initializer",
     "./project-selector-initializer",
-    "./rename-project-command-initializer",
+    "./project-toolbar-commands-initializer",
     "./project-dialog-content-initializer",
     "./project-mode-toolbar-view-model-initializer",
-    "./project-notification-initializer"
+    "./project-notification-initializer",
+
+    "xstyle/css!./extended-projects.css"
 ], function (
     declare,
     _Module,
     storeInitializer,
     projectSelectorInitializer,
-    renameProjectCommandInitializer,
+    projectToolbarCommandsInitializer,
     projectDialogContentInitializer,
     projectModeToolbarViewModelInitializer,
     projectNotificationInitializer
@@ -23,7 +25,7 @@ define([
 
             storeInitializer();
             projectSelectorInitializer();
-            renameProjectCommandInitializer();
+            projectToolbarCommandsInitializer();
             projectDialogContentInitializer();
             projectModeToolbarViewModelInitializer();
             projectNotificationInitializer();

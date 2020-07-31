@@ -18,7 +18,8 @@ namespace EPiServer.Labs.ProjectEnhancements
         IEnumerable<ProjectSettings> LoadAll();
     }
 
-    public class ProjectSettings
+    [EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true)]
+    public class ProjectSettings: IDynamicData
     {
         public Identity Id { get; set; }
 
@@ -26,7 +27,7 @@ namespace EPiServer.Labs.ProjectEnhancements
         public int ProjectId { get; set; }
 
         public string Description { get; set; }
-        public string Category { get; set; }
+        public string Categories { get; set; }
         public string Color { get; set; }
         public string LastChangedBy { get; set; }
         public DateTime LastChangedDate { get; set; }
@@ -55,7 +56,7 @@ namespace EPiServer.Labs.ProjectEnhancements
                 approvalReview.Description = projectSettings.Description;
                 approvalReview.Color = projectSettings.Color;
                 approvalReview.LastChangedBy = projectSettings.LastChangedBy;
-                approvalReview.Category = projectSettings.Category;
+                approvalReview.Categories = projectSettings.Categories;
                 approvalReview.LastChangedDate = projectSettings.LastChangedDate;
                 GetStore().Save(approvalReview);
             }

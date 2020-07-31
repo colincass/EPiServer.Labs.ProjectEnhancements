@@ -41,5 +41,8 @@ namespace EPiServer.Labs.ProjectEnhancements
 
         [UIHint(UIHint.Textarea)]
         public virtual string Description { get; set; }
+
+        [UIHint("project-category")]
+        public virtual string Categories { get; set; }
     }
 }

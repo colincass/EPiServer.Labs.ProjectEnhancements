@@ -57,15 +57,16 @@ namespace EPiServer.Labs.ProjectEnhancements
             return Rest(extendedProjectViewModel);
         }
 
-        private void AddExtendedFields(ExtendedProjectViewModel project)
+        private void AddExtendedFields(ExtendedProjectViewModel projectViewModel)
         {
-            var projectSettings = _projectEnhancementsStore.Load(project.Id);
+            var projectSettings = _projectEnhancementsStore.Load(projectViewModel.Id);
             if (projectSettings == null)
             {
                 return;
             }
 
-            project.Description = projectSettings.Description;
+            projectViewModel.Description = projectSettings.Description;
+            projectViewModel.Categories = projectSettings.Categories;
         }
 
         private void AddExtendedFields(IReadOnlyCollection<ExtendedProjectViewModel> projects)
@@ -77,6 +78,7 @@ namespace EPiServer.Labs.ProjectEnhancements
                 if (projectSettings != null)
                 {
                     extendedProjectViewModel.Description = projectSettings.Description;
+                    extendedProjectViewModel.Categories = projectSettings.Categories;
                 }
             }
         }
@@ -103,11 +105,7 @@ namespace EPiServer.Labs.ProjectEnhancements
                 };
             }
 
-            var projectSettings = new ProjectSettings
-            {
-                Description = projectViewModel.Description
-            };
-            _projectEnhancementsStore.Save(id.Value, projectSettings);
+            SaveProjectSettings(projectViewModel);
 
             _projectRepository.Save(_viewModelConverter.ToProject(projectViewModel));
             var extendedProjectViewModel = _viewModelConverter.ToViewModel(project);
@@ -127,13 +125,10 @@ namespace EPiServer.Labs.ProjectEnhancements
             try
             {
                 var project = Create(_viewModelConverter.ToProject(projectViewModel));
+                projectViewModel.Id = project.ID;
 
-                //TODO: remove this code
-                System.Web.HttpContext.Current.Cache["project____" + projectViewModel.Id] = projectViewModel.Description;
-
-                var extendedProjectViewModel = _viewModelConverter.ToViewModel(project);
-                AddExtendedFields(extendedProjectViewModel);
-                return new RestStatusCodeResult(HttpStatusCode.Created) { Data = extendedProjectViewModel };
+                SaveProjectSettings(projectViewModel);
+                return new RestStatusCodeResult(HttpStatusCode.Created) { Data = projectViewModel };
             }
             catch (EPiServerException e)
             {
@@ -145,6 +140,16 @@ namespace EPiServer.Labs.ProjectEnhancements
                     }
                 };
             }
+        }
+
+        private void SaveProjectSettings(ExtendedProjectViewModel projectViewModel)
+        {
+            var projectSettings = new ProjectSettings
+            {
+                Description = projectViewModel.Description,
+                Categories = projectViewModel.Categories
+            };
+            _projectEnhancementsStore.Save(projectViewModel.Id, projectSettings);
         }
 
         [HttpDelete]
@@ -159,6 +164,7 @@ namespace EPiServer.Labs.ProjectEnhancements
 
             // TODO: Should this be wrapped in a try-catch?
             _projectRepository.Delete(id);
+            _projectEnhancementsStore.Delete(id);
 
             // Return a 200 OK status code since the operation has completed.
             return new RestStatusCodeResult(HttpStatusCode.OK);
