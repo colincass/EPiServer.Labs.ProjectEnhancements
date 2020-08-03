@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/when",
 
     "epi/dependency",
     "epi-cms/project/command/AddProject",
@@ -8,6 +9,7 @@ define([
     "epi/i18n!epi/cms/nls/episerver.shared.action"
 ], function (
     declare,
+    when,
 
     dependency,
     AddProject,
@@ -30,7 +32,7 @@ define([
         _execute: function () {
             if (typeof this.value.description === "undefined") {
                 var currentArgs = arguments;
-                this.projectStore.get(this.value.id).then(function (extendedProject) {
+                when(this.projectStore.get(this.value.id)).then(function (extendedProject) {
                     this.set("value", extendedProject);
                     this.inherited(currentArgs);
                 }.bind(this));

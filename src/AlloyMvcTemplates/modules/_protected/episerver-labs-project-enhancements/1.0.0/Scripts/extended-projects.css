@@ -1,3 +1,19 @@
 .extended-projects-dialog textarea.dijitTextBox {
     margin: 0;
 }
+
+.project-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    margin-left: 2px;
+    background: red;
+}
+
+label.epi-selector-list__title .project-indicator {
+    margin-left: 0;
+    margin-right: 4px;
+}

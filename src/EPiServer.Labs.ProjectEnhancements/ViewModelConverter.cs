@@ -20,8 +20,7 @@ namespace EPiServer.Labs.ProjectEnhancements
 
         public ViewModelConverter(ProjectRepository projectRepository,
             IContentLoader contentLoader,
-            ContentLoaderService contentLoaderService,
-            IProjectEnhancementsStore projectEnhancementsStore)
+            ContentLoaderService contentLoaderService)
         {
             _contentLoaderService = contentLoaderService;
             _projectRepository = projectRepository;
@@ -34,7 +33,7 @@ namespace EPiServer.Labs.ProjectEnhancements
             {
                 Id = project.ID,
                 Name = project.Name,
-                Status = project.ToString().ToLowerInvariant(),
+                Status = project.Status.ToString().ToLowerInvariant(),
                 Created = project.Created,
                 CreatedBy = project.CreatedBy,
                 DelayPublishUntil = project.DelayPublishUntil,

@@ -166,9 +166,11 @@
     <Compile Include="ProjectCategory\NullProjectCategoriesDataSource.cs" />
     <Compile Include="ProjectCategory\ProjectCategoryItem.cs" />
     <Compile Include="ProjectCategory\ProjectCategoryEditorDescriptor.cs" />
+    <Compile Include="ProjectEnhancementsModule.cs" />
     <Compile Include="ProjectEnhancementsStore.cs" />
     <Compile Include="ExtendedProjectStore.cs" />
     <Compile Include="ExtendedProjectViewModel.cs" />
+    <Compile Include="ProjectTreeIndicator\IsPartOfCurrentProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelConverter.cs" />
   </ItemGroup>

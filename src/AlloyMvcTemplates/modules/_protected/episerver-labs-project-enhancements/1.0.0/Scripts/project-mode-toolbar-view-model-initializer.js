@@ -17,5 +17,20 @@ define([
         }
 
         ProjectModeToolbarViewModel.prototype.postscript.nom = "postscript";
+
+
+        var originalClearProjectStatus = ProjectModeToolbarViewModel.prototype._clearProjectStats;
+        ProjectModeToolbarViewModel.prototype._clearProjectStats = function () {
+            var result = originalClearProjectStatus.apply(this, arguments);
+
+            result = Object.assign({}, result, { description: "", categories: []  });
+
+            return result;
+        }
+
+        ProjectModeToolbarViewModel.prototype._clearProjectStats.nom = "_clearProjectStats";
+
+
+        
     }
 });
