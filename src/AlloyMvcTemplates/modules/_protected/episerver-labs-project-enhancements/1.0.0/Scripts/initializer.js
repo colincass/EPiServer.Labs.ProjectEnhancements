@@ -32,11 +32,17 @@ define([
             var options = this._settings.projectOptions;
 
             storeInitializer();
-            projectSelectorInitializer();
-            projectToolbarCommandsInitializer();
-            projectDialogContentInitializer();
-            projectModeToolbarViewModelInitializer();
-            projectNotificationInitializer();
+
+            if (options.showDescription || options.showCategories) {
+                projectSelectorInitializer();
+                projectToolbarCommandsInitializer();
+                projectDialogContentInitializer();
+                projectModeToolbarViewModelInitializer();
+            }
+
+            if (options.showNotificationTooltip) {
+                projectNotificationInitializer();
+            }
 
             if (options.showPageTreeIndicator) {
                 contentNavigationTreeInitializer();

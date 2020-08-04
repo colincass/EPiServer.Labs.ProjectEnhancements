@@ -165,6 +165,7 @@
     <Compile Include="..\..\version.cs">
       <Link>Properties\version.cs</Link>
     </Compile>
+    <Compile Include="AvailableProjectPropertiesMetadataExtender.cs" />
     <Compile Include="ProjectCategory\IProjectCategoriesDataSource.cs" />
     <Compile Include="ProjectCategory\NullProjectCategoriesDataSource.cs" />
     <Compile Include="ProjectCategory\ProjectCategoryItem.cs" />

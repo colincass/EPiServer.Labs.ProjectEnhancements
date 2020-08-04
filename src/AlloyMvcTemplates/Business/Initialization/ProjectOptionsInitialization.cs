@@ -14,7 +14,10 @@ namespace AlloyTemplates.Business.Initialization
             {
                 context.Services.Configure<ProjectOptions>(x =>
                 {
-                    x.ShowPageTreeIndicator = false;
+                    //x.ShowPageTreeIndicator = false;
+                    //x.ShowDescription = false;
+                    //x.ShowCategories = false;
+                    //x.ShowNotificationTooltip = false;
                 });
             };
         }
