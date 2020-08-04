@@ -10,10 +10,15 @@
     -moz-border-radius: 10px;
     border-radius: 10px;
     margin-left: 2px;
-    background: red;
+    background: #c0c0c0;
 }
 
 label.epi-selector-list__title .project-indicator {
+    margin-left: 0;
+    margin-right: 4px;
+}
+
+.epi-project-mode-toolbar__selector .project-indicator {
     margin-left: 0;
     margin-right: 4px;
 }

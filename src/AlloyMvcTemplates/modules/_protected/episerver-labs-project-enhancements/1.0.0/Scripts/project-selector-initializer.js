@@ -1,13 +1,35 @@
 define([
     "epi-cms/ApplicationSettings",
+    "epi-cms/project/ProjectSelector",
     "epi-cms/project/ProjectSelectorList"
 ], function (
     ApplicationSettings,
+    ProjectSelector,
     ProjectSelectorList
 ) {
-    // Add description to project selector
+    function addCategories (item, parentEl) {
+        if (!item || !item.categories) {
+            return;
+        }
+        var categories = item.categories.split(",");
+        categories.forEach(function (category) {
+            var categoryItem = ApplicationSettings.projectCategories.filter(function (c) {
+                return c.id === category;
+            })[0];
+            if (!categoryItem) {
+                return;
+            }
+            var projectEl = document.createElement("span");
+            projectEl.classList.add("project-indicator");
+            projectEl.style.backgroundColor = categoryItem.color;
+            projectEl.title = categoryItem.name;
+            parentEl.prepend(projectEl);
+        });
+    }
 
-    return function () {
+
+    // Add description to project selector
+    function initializeProjectSelectorList () {
         var originalRenderRow = ProjectSelectorList.prototype.renderRow;
 
         ProjectSelectorList.prototype.renderRow = function (item, options) {
@@ -19,30 +41,41 @@ define([
                 var descriptionTextEl = document.createTextNode(item.description);
                 descriptionEl.appendChild(descriptionTextEl);
 
-                if (item.categories) {
-                    var categories = item.categories.split(",");
-                    categories.forEach(function (category) {
-                        var categoryItem = ApplicationSettings.projectCategories.filter(function (c) {
-                            return c.id === category;
-                        })[0];
-                        if (!categoryItem) {
-                            return;
-                        }
-                        var projectEl = document.createElement("span");
-                        projectEl.classList.add("project-indicator");
-                        projectEl.style.backgroundColor = categoryItem.color;
-                        projectEl.title = categoryItem.name;
-                        var labelEl = originalResult.querySelector("label.epi-selector-list__title");
-                        labelEl.prepend(projectEl);
-                    });
-                }
-
                 originalResult.appendChild(descriptionEl);
             }
+
+            var labelEl = originalResult.querySelector("label.epi-selector-list__title");
+            addCategories(item, labelEl);
+
             return originalResult;
         }
 
         ProjectSelectorList.prototype.renderRow.nom = "renderRow";
+    }
+
+    // Show categories in project selector
+    function initializeProjectSelector() {
+        var originalSetValue = ProjectSelector.prototype._setValueAttr;
+
+        ProjectSelector.prototype._setValueAttr = function (item, options) {
+            var originalResult = originalSetValue.apply(this, arguments);
+
+
+            this.containerNode.querySelectorAll(".project-indicator").forEach(function (el) {
+                this.containerNode.removeChild(el);
+            }, this);
+
+            addCategories(this.value, this.containerNode);
+            
+            return originalResult;
+        }
+
+        ProjectSelector.prototype._setValueAttr.nom = "_setValueAttr";
+    }
+
+    return function () {
+        initializeProjectSelectorList();
+        initializeProjectSelector();
     }
 });
 
