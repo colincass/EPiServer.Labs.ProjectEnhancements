@@ -60,17 +60,20 @@ define([
         ProjectSelector.prototype._setValueAttr = function (item, options) {
             var originalResult = originalSetValue.apply(this, arguments);
 
-
-            this.containerNode.querySelectorAll(".project-indicator").forEach(function (el) {
-                this.containerNode.removeChild(el);
-            }, this);
-
-            addCategories(this.value, this.containerNode);
+            this.updateCategories(this.value);
             
             return originalResult;
         }
 
         ProjectSelector.prototype._setValueAttr.nom = "_setValueAttr";
+
+        ProjectSelector.prototype.updateCategories = function (value) {
+            this.containerNode.querySelectorAll(".project-indicator").forEach(function (el) {
+                this.containerNode.removeChild(el);
+            }, this);
+
+            addCategories(value, this.containerNode);
+        }
     }
 
     return function () {

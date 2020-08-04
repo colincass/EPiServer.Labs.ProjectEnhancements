@@ -1,8 +1,10 @@
 define([
     "epi/dependency",
+    "epi-cms/project/ProjectModeToolbar",
     "epi-cms/project/viewmodels/ProjectModeToolbarViewModel"
 ], function (
     dependency,
+    ProjectModeToolbar,
     ProjectModeToolbarViewModel
 ) {
     // change project store to use extended version
@@ -51,9 +53,27 @@ define([
         ProjectModeToolbarViewModel.prototype.initialize.nom = "initialize";
     }
 
+    // override projectModeToolbar
+    function overrideProjectModeToolbar () {
+        var originalStartup = ProjectModeToolbar.prototype.startup;
+        ProjectModeToolbar.prototype.startup = function () {
+            originalStartup.apply(this, arguments);
+
+            // categories should be reloaded when editing project
+            this.own(this.model.watch("currentProject", function (property, oldValue, newValue) {
+                if (newValue && typeof newValue.categories !== "undefined") {
+                    this.projectSelector.updateCategories(newValue);
+                }
+            }.bind(this)));
+        }
+
+        ProjectModeToolbar.prototype.startup.nom = "startup";
+    }
+
     return function () {
         overridePostscript();
         overrideClearProjectStatus();
         overrideInitialize();
+        overrideProjectModeToolbar();
     }
 });
