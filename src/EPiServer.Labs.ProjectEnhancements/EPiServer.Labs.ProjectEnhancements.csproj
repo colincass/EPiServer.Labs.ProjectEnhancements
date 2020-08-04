@@ -173,6 +173,7 @@
     <Compile Include="ProjectEnhancementsStore.cs" />
     <Compile Include="ExtendedProjectStore.cs" />
     <Compile Include="ExtendedProjectViewModel.cs" />
+    <Compile Include="ProjectOptions.cs" />
     <Compile Include="ProjectTreeIndicator\IsPartOfCurrentProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateProjectInfo.cs" />

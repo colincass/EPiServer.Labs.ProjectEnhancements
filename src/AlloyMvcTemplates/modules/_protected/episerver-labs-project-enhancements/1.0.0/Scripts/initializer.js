@@ -29,6 +29,7 @@ define([
             this.inherited(arguments);
 
             ApplicationSettings.projectCategories = this._settings.projectCategories;
+            var options = this._settings.projectOptions;
 
             storeInitializer();
             projectSelectorInitializer();
@@ -36,7 +37,10 @@ define([
             projectDialogContentInitializer();
             projectModeToolbarViewModelInitializer();
             projectNotificationInitializer();
-            contentNavigationTreeInitializer();
+
+            if (options.showPageTreeIndicator) {
+                contentNavigationTreeInitializer();
+            }
         }
     });
 });

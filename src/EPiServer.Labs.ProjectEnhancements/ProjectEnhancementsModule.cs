@@ -15,22 +15,28 @@ namespace EPiServer.Labs.ProjectEnhancements
         }
 
         /// <inheritdoc />
-        public override ModuleViewModel CreateViewModel(ModuleTable moduleTable, IClientResourceService clientResourceService)
+        public override ModuleViewModel CreateViewModel(ModuleTable moduleTable,
+            IClientResourceService clientResourceService)
         {
             var dataSource = ServiceLocator.Current.GetInstance<IProjectCategoriesDataSource>();
-            return new ProjectEnhancementsModuleViewModel(this, clientResourceService, dataSource.List().ToList());
+            var options = ServiceLocator.Current.GetInstance<ProjectOptions>();
+            return new ProjectEnhancementsModuleViewModel(this, clientResourceService, dataSource.List().ToList(),
+                options);
         }
     }
 
     public class ProjectEnhancementsModuleViewModel : ModuleViewModel
     {
         public ProjectEnhancementsModuleViewModel(ShellModule shellModule, IClientResourceService clientResourceService,
-            List<ProjectCategoryItem> projectCategories) :
+            List<ProjectCategoryItem> projectCategories, ProjectOptions options) :
             base(shellModule, clientResourceService)
         {
             ProjectCategories = projectCategories;
+            ProjectOptions = options;
         }
 
         public IEnumerable<ProjectCategoryItem> ProjectCategories { get; }
+
+        public ProjectOptions ProjectOptions { get; set; }
     }
 }
