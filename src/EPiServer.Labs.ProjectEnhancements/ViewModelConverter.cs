@@ -45,6 +45,7 @@ namespace EPiServer.Labs.ProjectEnhancements
         {
             return new Project
             {
+                ID = extendedProjectViewModel.Id,
                 Name = extendedProjectViewModel.Name
             };
         }

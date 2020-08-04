@@ -108,6 +108,7 @@ namespace EPiServer.Labs.ProjectEnhancements
             SaveProjectSettings(projectViewModel);
 
             _projectRepository.Save(_viewModelConverter.ToProject(projectViewModel));
+            project = _projectRepository.Get(projectViewModel.Id);
             var extendedProjectViewModel = _viewModelConverter.ToViewModel(project);
             AddExtendedFields(extendedProjectViewModel);
             return new RestStatusCodeResult(HttpStatusCode.OK) {Data = extendedProjectViewModel};
