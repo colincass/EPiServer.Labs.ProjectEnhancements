@@ -30,15 +30,11 @@ define([
         },
 
         _execute: function () {
-            if (typeof this.value.description === "undefined") {
-                var currentArgs = arguments;
-                when(this.projectStore.get(this.value.id)).then(function (extendedProject) {
-                    this.set("value", extendedProject);
-                    this.inherited(currentArgs);
-                }.bind(this));
-            } else {
-                this.inherited(arguments);
-            }
+            var currentArgs = arguments;
+            when(this.projectStore.get(this.value.id)).then(function (extendedProject) {
+                this.set("value", extendedProject);
+                this.inherited(currentArgs);
+            }.bind(this));
         }
     });
 
