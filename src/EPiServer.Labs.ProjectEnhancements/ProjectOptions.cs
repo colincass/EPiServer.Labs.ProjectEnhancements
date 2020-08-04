@@ -14,16 +14,16 @@ namespace EPiServer.Labs.ProjectEnhancements
         /// <summary>
         /// When true, then project description is available
         /// </summary>
-        public bool ShowDescription { get; set; }
+        public bool ShowDescription { get; set; } = true;
 
         /// <summary>
         /// When true, then project categories are available
         /// </summary>
-        public bool ShowCategories { get; set; }
+        public bool ShowCategories { get; set; } = true;
 
         /// <summary>
         /// When true, then notification tooltip with project information is available
         /// </summary>
-        public bool ShowNotificationTooltip { get; set; }
+        public bool ShowNotificationTooltip { get; set; } = true;
     }
 }
