@@ -67,6 +67,7 @@ namespace EPiServer.Labs.ProjectEnhancements
 
             projectViewModel.Description = projectSettings.Description;
             projectViewModel.Categories = projectSettings.Categories;
+            projectViewModel.VisibleTo = projectSettings.VisibleTo;
         }
 
         private void AddExtendedFields(IReadOnlyCollection<ExtendedProjectViewModel> projects)
@@ -79,6 +80,16 @@ namespace EPiServer.Labs.ProjectEnhancements
                 {
                     extendedProjectViewModel.Description = projectSettings.Description;
                     extendedProjectViewModel.Categories = projectSettings.Categories;
+                    extendedProjectViewModel.VisibleTo = projectSettings.VisibleTo;
+                    if (projectSettings.LastChangedDate.HasValue)
+                    {
+                        extendedProjectViewModel.Created = projectSettings.LastChangedDate.Value;
+                    }
+
+                    if (projectSettings.LastChangedBy != null)
+                    {
+                        extendedProjectViewModel.CreatedBy = projectSettings.LastChangedBy;
+                    }
                 }
             }
         }
@@ -148,7 +159,8 @@ namespace EPiServer.Labs.ProjectEnhancements
             var projectSettings = new ProjectSettings
             {
                 Description = projectViewModel.Description,
-                Categories = projectViewModel.Categories
+                Categories = projectViewModel.Categories,
+                VisibleTo = projectViewModel.VisibleTo
             };
             _projectEnhancementsStore.Save(projectViewModel.Id, projectSettings);
         }

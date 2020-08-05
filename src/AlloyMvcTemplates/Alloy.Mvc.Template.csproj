@@ -446,6 +446,11 @@
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-notification-initializer.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-toolbar-commands-initializer.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\store-initializer.js" />
+    <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\user-role-selector\combo-box.js" />
+    <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\user-role-selector\user-role-selector.html" />
+    <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\user-role-selector\user-role-selector.js" />
+    <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\user-role-selector\user-role.html" />
+    <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\user-role-selector\user-role.js" />
     <Content Include="modules\_protected\episerver-telemetry-ui\episerver-telemetry-ui.zip" />
     <Content Include="Resources\LanguageFiles\PropertyNames_sv.xml">
       <SubType>Designer</SubType>

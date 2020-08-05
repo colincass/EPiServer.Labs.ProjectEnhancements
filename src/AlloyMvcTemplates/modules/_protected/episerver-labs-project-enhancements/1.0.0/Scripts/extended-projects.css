@@ -33,3 +33,7 @@ label.epi-selector-list__title .project-indicator {
     margin-left: 0;
     margin-right: 4px;
 }
+
+.epi-user-role-selector.epi-approval-step .dgrid-content {
+    margin-top: 0;
+}

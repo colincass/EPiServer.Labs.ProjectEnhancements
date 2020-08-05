@@ -173,6 +173,7 @@
     <Compile Include="ProjectCategory\NullProjectCategoriesDataSource.cs" />
     <Compile Include="ProjectCategory\ProjectCategoryItem.cs" />
     <Compile Include="ProjectCategory\ProjectCategoryEditorDescriptor.cs" />
+    <Compile Include="ProjectCategory\UserRoleSelectorEditorDescriptor.cs" />
     <Compile Include="ProjectEnhancementsModule.cs" />
     <Compile Include="ProjectEnhancementsStore.cs" />
     <Compile Include="ExtendedProjectStore.cs" />

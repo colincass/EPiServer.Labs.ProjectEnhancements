@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EPiServer.Approvals;
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 using EPiServer.ServiceLocation;
@@ -30,7 +31,17 @@ namespace EPiServer.Labs.ProjectEnhancements
         public string Categories { get; set; }
         public string Color { get; set; }
         public string LastChangedBy { get; set; }
-        public DateTime LastChangedDate { get; set; }
+        public DateTime? LastChangedDate { get; set; }
+        public string VisibleTo { get; set; }
+    }
+
+    public class UserRole
+    {
+        public string DisplayName { get; set; }
+
+        public string Name { get; set; }
+
+        public ApprovalDefinitionReviewerType ReviewerType { get; set; }
     }
 
     [ServiceConfiguration(typeof(IProjectEnhancementsStore), Lifecycle = ServiceInstanceScope.Singleton)]
@@ -58,6 +69,7 @@ namespace EPiServer.Labs.ProjectEnhancements
                 approvalReview.LastChangedBy = projectSettings.LastChangedBy;
                 approvalReview.Categories = projectSettings.Categories;
                 approvalReview.LastChangedDate = projectSettings.LastChangedDate;
+                approvalReview.VisibleTo = projectSettings.VisibleTo;
                 GetStore().Save(approvalReview);
             }
         }
