@@ -9,6 +9,7 @@ define([
     "./project-mode-toolbar-view-model-initializer",
     "./project-notification-initializer",
     "./content-navigation-tree-initializer",
+    "./project-overview-initializer",
 
     "xstyle/css!./extended-projects.css"
 ], function (
@@ -22,7 +23,8 @@ define([
     projectDialogContentInitializer,
     projectModeToolbarViewModelInitializer,
     projectNotificationInitializer,
-    contentNavigationTreeInitializer
+    contentNavigationTreeInitializer,
+    projectOverviewInitializer
 ) {
     return declare([_Module], {
         initialize: function () {
@@ -38,6 +40,10 @@ define([
                 projectToolbarCommandsInitializer();
                 projectDialogContentInitializer();
                 projectModeToolbarViewModelInitializer();
+            }
+
+            if (options.showDescription) {
+                projectOverviewInitializer();
             }
 
             if (options.showNotificationTooltip) {

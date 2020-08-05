@@ -6,6 +6,13 @@
     margin-left: 4px;
 }
 
+.project-overview-description {
+    display: block;
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
 .project-indicator {
     display: inline-block;
     width: 10px;

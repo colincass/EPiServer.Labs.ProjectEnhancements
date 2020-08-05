@@ -441,6 +441,7 @@
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-mode-toolbar-view-model-initializer.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-dialog-content-initializer.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-category\project-category-selector.js" />
+    <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-overview-initializer.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-selector-initializer.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-notification-initializer.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-toolbar-commands-initializer.js" />
