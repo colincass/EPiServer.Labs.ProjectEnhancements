@@ -2,6 +2,10 @@
     margin: 0;
 }
 
+.project-indicator-tree-container>span {
+    margin-left: 4px;
+}
+
 .project-indicator {
     display: inline-block;
     width: 10px;

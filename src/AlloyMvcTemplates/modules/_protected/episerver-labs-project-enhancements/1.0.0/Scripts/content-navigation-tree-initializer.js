@@ -11,16 +11,16 @@ define([
         _ContentNavigationTreeNode.prototype._updateIndividualLayout = function () {
             var originalResult = originalUpdateIndividualLayout.apply(this, arguments);
             if (this.item.capabilities && this.item.capabilities.isPartOfCurrentProject) {
-                var projectsContainerEl = this.labelNode.querySelector(".project-indicator-container");
+                var projectsContainerEl = this.labelNode.querySelector(".project-indicator-tree-container");
                 if (projectsContainerEl) {
                     this.labelNode.removeChild(projectsContainerEl);
                 }
 
                 projectsContainerEl = document.createElement("span");
-                projectsContainerEl.classList.add("project-indicator-container");
+                projectsContainerEl.classList.add("project-indicator-tree-container");
 
                 var projectEl = document.createElement("span");
-                projectEl.classList.add("project-indicator");
+                projectEl.classList.add("dijitInline", "epi-iconObjectProject");
                 projectsContainerEl.appendChild(projectEl);
                 projectEl.title = "part of current project";
 
