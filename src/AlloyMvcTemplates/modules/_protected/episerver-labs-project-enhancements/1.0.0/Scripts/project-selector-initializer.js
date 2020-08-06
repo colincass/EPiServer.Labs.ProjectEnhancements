@@ -92,8 +92,9 @@ define([
 
                     content:
                         '<p>You are now in project: <strong>' + projectName + '</strong></p>' + description +
-                        '<button data-dojo-attach-point="closeBtn" data-dojo-type="dijit/form/Button" type="button">Close</button>' +
-                        '<input data-dojo-attach-point="dontShowAgainChk" id="dontShowAgainChk" data-dojo-type="dijit/form/CheckBox" /> <label for="dontShowAgainChk">Don\'t show this message again</label>',
+                        '<input data-dojo-attach-point="dontShowAgainChk" id="dontShowAgainChk" data-dojo-type="dijit/form/CheckBox" /> <label for="dontShowAgainChk">Don\'t show this message again</label>' +
+                        '<br /><br />' +
+                        '<button data-dojo-attach-point="closeBtn" data-dojo-type="dijit/form/Button" type="button">Close</button>',
 
                     startup: function () {
                         this.inherited(arguments);
