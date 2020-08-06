@@ -45,7 +45,7 @@ define([
                     }
                 }.bind(this));
             }
-        }
+        };
 
         OverviewViewModel.prototype._updateSelectedProjectDependencies.nom = "_updateSelectedProjectDependencies";
     };
@@ -53,6 +53,6 @@ define([
     return function () {
         overrideOverview();
         overrideOverviewViewModel();
-    }
+    };
 });
 

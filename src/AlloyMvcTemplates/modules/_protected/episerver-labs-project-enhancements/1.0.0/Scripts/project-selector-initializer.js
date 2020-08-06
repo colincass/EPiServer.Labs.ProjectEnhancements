@@ -1,13 +1,29 @@
 define([
+    "dojo/_base/declare",
+    "dojo/on",
+    "dojo/when",
+    "dijit/form/Button",
+    "dijit/form/CheckBox",
+    "dijit/TooltipDialog",
+    "dijit/popup",
+    "epi/dependency",
     "epi-cms/ApplicationSettings",
     "epi-cms/project/ProjectSelector",
     "epi-cms/project/ProjectSelectorList"
 ], function (
+    declare,
+    on,
+    when,
+    Button,
+    CheckBox,
+    TooltipDialog,
+    popup,
+    dependency,
     ApplicationSettings,
     ProjectSelector,
     ProjectSelectorList
 ) {
-    function addCategories (item, parentEl) {
+    function addCategories(item, parentEl) {
         if (!item || !item.categories) {
             return;
         }
@@ -29,7 +45,7 @@ define([
 
 
     // Add description to project selector
-    function initializeProjectSelectorList () {
+    function initializeProjectSelectorList() {
         var originalRenderRow = ProjectSelectorList.prototype.renderRow;
 
         ProjectSelectorList.prototype.renderRow = function (item, options) {
@@ -48,37 +64,126 @@ define([
             addCategories(item, labelEl);
 
             return originalResult;
-        }
-
+        };
         ProjectSelectorList.prototype.renderRow.nom = "renderRow";
     }
 
-    // Show categories in project selector
     function initializeProjectSelector() {
+        ProjectSelector.prototype.showTooltip = function (value) {
+            // show tooltip after after page was refreshed
+
+            var self = this;
+
+            function showTooltip(projectName) {
+                var description = value && value.description ? "<p>" + value.description + "</p>": "";
+
+                var CustomDialog = declare([TooltipDialog], {
+                    baseClass: "project-tooltip",
+
+                    content:
+                        '<p>You are now in project: <strong>' + projectName + '</strong></p>' + description +
+                        '<button data-dojo-attach-point="closeBtn" data-dojo-type="dijit/form/Button" type="button">Close</button>' +
+                        '<input data-dojo-attach-point="dontShowAgainChk" id="dontShowAgainChk" data-dojo-type="dijit/form/CheckBox" /> <label for="dontShowAgainChk">Don\'t show this message again</label>',
+
+                    startup: function () {
+                        this.inherited(arguments);
+
+                        var closeBtn = this.getChildren().filter(x => x.dojoAttachPoint === "closeBtn")[0];
+                        var dontShowAgainChk = this.getChildren().filter(x => x.dojoAttachPoint === "dontShowAgainChk")[0];
+                        this.own(
+                            on(closeBtn, "click", function () {
+                                popup.close();
+                                dialog.destroyRecursive();
+                                dialog = null;
+                                if (dontShowAgainChk.get("checked")) {
+                                    // save that Editor don't want to see tooltip again
+                                    self.profile.set("projects.tooltip.visible", "false");
+                                }
+                            })
+                        );
+                    }
+                });
+
+                var dialog = new CustomDialog();
+                dialog.startup();
+
+                popup.open({
+                    popup: dialog,
+                    around: self.domNode
+                });
+            }
+
+            if (!this._showTooltip) {
+                return;
+            }
+
+            // after the value was set we don't want to show tooltip when value seleted project changed
+            this._showTooltip = false;
+
+            // when project was not selected, then don't show the tooltip
+            if (!value) {
+                return;
+            }
+
+            this.profile = dependency.resolve("epi.shell.Profile");
+            when(this.profile.get("projects.tooltip.visible")).then(function (tooltipVisible) {
+                if (tooltipVisible === "false") {
+                    return;
+                }
+                when(this.profile.get("projects.last-tooltip")).then(function (tooltipShowDateStr) {
+                    this.profile.set("projects.last-tooltip", new Date().toString());
+
+                    if (tooltipShowDateStr) {
+                        var tooltipDate = new Date(tooltipShowDateStr);
+                        var nextTooltipDate = 5 * 60000; // 5 minutes
+                        if (new Date(new Date() - nextTooltipDate) > tooltipDate) {
+                            showTooltip(value.name);
+                        }
+                    } else {
+                        showTooltip(value.name);
+                    }
+                }.bind(this));
+            }.bind(this));
+        };
+
+        // Show categories in project selector
         var originalSetValue = ProjectSelector.prototype._setValueAttr;
 
-        ProjectSelector.prototype._setValueAttr = function (item, options) {
+        ProjectSelector.prototype._setValueAttr = function (value) {
             var originalResult = originalSetValue.apply(this, arguments);
 
             this.updateCategories(this.value);
-            
-            return originalResult;
-        }
 
+            this.showTooltip(value);
+
+            return originalResult;
+        };
         ProjectSelector.prototype._setValueAttr.nom = "_setValueAttr";
 
+        // add new method to prototype `updateCategories` that refresh list of categories
         ProjectSelector.prototype.updateCategories = function (value) {
             this.containerNode.querySelectorAll(".project-indicator").forEach(function (el) {
                 this.containerNode.removeChild(el);
             }, this);
 
             addCategories(value, this.containerNode);
-        }
+        };
+
+        // show message when refresh the page to let user know that he is in project
+        var originalStartup = ProjectSelector.prototype.startup;
+        ProjectSelector.prototype.startup = function () {
+            // original startup method calls set("value", null), we don't want to show tooltip then
+            // but after the velue was set
+
+            this._showTooltip = false;
+            originalStartup.apply(this, arguments);
+            this._showTooltip = true;
+        };
+        ProjectSelector.prototype.startup.nom = "startup";
     }
 
     return function () {
         initializeProjectSelectorList();
         initializeProjectSelector();
-    }
+    };
 });
-

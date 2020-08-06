@@ -171,6 +171,7 @@
     <Compile Include="AvailableProjectPropertiesMetadataExtender.cs" />
     <Compile Include="ProjectCategory\IProjectCategoriesDataSource.cs" />
     <Compile Include="ProjectCategory\NullProjectCategoriesDataSource.cs" />
+    <Compile Include="ProjectCategory\ProjectCategoryColor.cs" />
     <Compile Include="ProjectCategory\ProjectCategoryItem.cs" />
     <Compile Include="ProjectCategory\ProjectCategoryEditorDescriptor.cs" />
     <Compile Include="ProjectCategory\UserRoleSelectorEditorDescriptor.cs" />

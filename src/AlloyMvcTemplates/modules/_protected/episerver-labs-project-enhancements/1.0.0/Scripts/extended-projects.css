@@ -34,6 +34,14 @@ label.epi-selector-list__title .project-indicator {
     margin-right: 4px;
 }
 
+.project-tooltip .dijitTooltipContainer {
+    padding: 16px;
+}
+
+.Sleek .dijitPopup.project-tooltipPopup {
+    box-shadow: none;
+}
+
 .epi-user-role-selector.epi-approval-step .dgrid-content {
     margin-top: 0;
 }

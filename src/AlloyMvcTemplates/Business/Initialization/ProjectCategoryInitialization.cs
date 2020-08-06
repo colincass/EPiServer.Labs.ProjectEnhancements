@@ -34,22 +34,29 @@ namespace AlloyTemplates.Business.Initialization
                 {
                     Id = "Campaigns",
                     Name = "Campaigns",
-                    Color = "red",
+                    Color = ProjectCategoryColor.Gray,
                     Description = "Used to publish Alloy campaigns"
                 },
                 new ProjectCategoryItem
                 {
                     Id = "Translations",
                     Name = "Translations",
-                    Color = "blue",
+                    Color = ProjectCategoryColor.Teal,
                     Description = "Used by translation companies"
                 },
                 new ProjectCategoryItem
                 {
                     Id = "Site",
                     Name = "Site branding",
-                    Color = "green",
+                    Color = ProjectCategoryColor.Yellow,
                     Description = "Used when editing content"
+                },
+                new ProjectCategoryItem
+                {
+                    Id = "Long name Long name Long name Long name Long name Long name",
+                    Name = "Long name Long name Long name Long name Long name Long name",
+                    Color = ProjectCategoryColor.Pink,
+                    Description = "Used to test long name and long description Used to test long name and long description Used to test long name and long description Used to test long name and long description"
                 }
             };
         }
