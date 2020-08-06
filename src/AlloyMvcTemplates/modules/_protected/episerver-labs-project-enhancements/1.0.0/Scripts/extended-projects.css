@@ -51,3 +51,14 @@
 .epi-user-role-selector.epi-approval-step .dgrid-content {
     margin-top: 0;
 }
+
+.project-category-dialog .dijitMenu {
+    border: none;
+}
+
+.project-category-dialog .dijitMenu .dijitMenuItemLabel {
+    max-width: 300px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
