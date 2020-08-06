@@ -15,8 +15,6 @@
 
 .project-indicator {
     display: inline-block;
-    width: 10px;
-    height: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -24,12 +22,20 @@
     background: #c0c0c0;
 }
 
-label.epi-selector-list__title .project-indicator {
+.project-list-categories-container .project-indicator {
+    max-width: 80px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 4px;
     margin-left: 0;
     margin-right: 4px;
 }
 
 .epi-project-mode-toolbar__selector .project-indicator {
+    width: 10px;
+    height: 10px;
+
     margin-left: 0;
     margin-right: 4px;
 }

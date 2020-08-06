@@ -23,7 +23,7 @@ define([
     ProjectSelector,
     ProjectSelectorList
 ) {
-    function addCategories(item, parentEl) {
+    function addCategories(item, parentEl, asLabels) {
         if (!item || !item.categories) {
             return;
         }
@@ -38,7 +38,15 @@ define([
             var projectEl = document.createElement("span");
             projectEl.classList.add("project-indicator");
             projectEl.style.backgroundColor = categoryItem.color;
-            projectEl.title = categoryItem.name;
+            if (asLabels) {
+                var nameEl = document.createTextNode(categoryItem.name);
+                projectEl.appendChild(nameEl);
+                if (categoryItem.description) {
+                    projectEl.title = categoryItem.description;
+                }
+            }
+            var description = categoryItem.description ? "\n" + categoryItem.description : "";
+            projectEl.title = categoryItem.name + description;
             parentEl.prepend(projectEl);
         });
     }
@@ -60,8 +68,10 @@ define([
                 originalResult.appendChild(descriptionEl);
             }
 
-            var labelEl = originalResult.querySelector("label.epi-selector-list__title");
-            addCategories(item, labelEl);
+            var categoriesEl = document.createElement("div");
+            categoriesEl.classList.add("project-list-categories-container");
+            originalResult.appendChild(categoriesEl);
+            addCategories(item, categoriesEl, true);
 
             return originalResult;
         };
