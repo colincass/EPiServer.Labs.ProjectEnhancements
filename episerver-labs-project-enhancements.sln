@@ -11,12 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A1272902
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
-		.gitignore = .gitignore		
+		.gitignore = .gitignore
 		build.cmd = build.cmd
 		iisexpress.cmd = iisexpress.cmd
 		LICENSE = LICENSE
 		pack-alloy.ps1 = pack-alloy.ps1
-		pack-core.ps1 = pack-core.ps1
 		pack.cmd = pack.cmd
 		pack.ps1 = pack.ps1
 		README.md = README.md
@@ -26,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A1272902
 		test.cmd = test.cmd
 		version.cs = version.cs
 		VersionUpdate.ps1 = VersionUpdate.ps1
+		build\packaging\Alloy.Sample.ProjectEnhancements.nuspec = build\packaging\Alloy.Sample.ProjectEnhancements.nuspec
+		build\packaging\EPiServer.Labs.ProjectEnhancements.nuspec = build\packaging\EPiServer.Labs.ProjectEnhancements.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer.Labs.ProjectEnhancements.Tests", "src\EPiServer.Labs.ProjectEnhancements.Tests\EPiServer.Labs.ProjectEnhancements.Tests.csproj", "{AAA884E4-A777-4211-88E3-8779FD83C3AA}"

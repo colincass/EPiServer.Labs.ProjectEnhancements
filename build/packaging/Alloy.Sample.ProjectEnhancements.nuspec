@@ -16,7 +16,7 @@
     <file src="build\packaging\transforms\*.transform" target="setup"/>
     <file src="build\packaging\*.sql" target="setup"/>
     <file src="packages\episerver.cms.core.*\tools\EPiServer.Cms.Core.sql" target="setup\sql"/>
-    <file src="src\Episerver.Labs.ProjectEnhancements\bin\$configuration$\Labs.ProjectEnhancements.*" target="wwwroot\bin" />
+    <file src="src\Episerver.Labs.ProjectEnhancements\bin\$configuration$\Episerver.Labs.ProjectEnhancements.*" target="wwwroot\bin" />
     <file src="src\AlloyMvcTemplates\bin\*.*" target="wwwroot\bin" exclude="src\AlloyMvcTemplates\bin\EPiServer.Labs.ProjectEnhancements.*"/>
     <file src="src\AlloyMvcTemplates\ClientResources\**\*.*" target="wwwroot\ClientResources" />
     <file src="src\AlloyMvcTemplates\Resources\**\*.*" target="wwwroot\Resources" />
