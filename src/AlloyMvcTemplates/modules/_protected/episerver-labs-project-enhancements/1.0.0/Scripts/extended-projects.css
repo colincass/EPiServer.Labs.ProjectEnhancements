@@ -62,3 +62,15 @@
     white-space: nowrap;
     overflow: hidden;
 }
+
+.project-tooltip .project-description {
+    display: block;
+    padding: 4px 0 8px 0;
+    font-style: italic;
+    color: #777;
+}
+
+.project-tooltip .close-button {
+    float: right;
+    margin-top: 16px;
+}

@@ -85,16 +85,20 @@ define([
             var self = this;
 
             function showTooltip(projectName) {
-                var description = value && value.description ? "<p>" + value.description + "</p>": "";
+                var description = value && value.description ? "<span class='project-description'>" + value.description + "</span>" : "";
 
                 var CustomDialog = declare([TooltipDialog], {
                     baseClass: "project-tooltip",
 
                     content:
-                        '<p>You are now in project: <strong>' + projectName + '</strong></p>' + description +
-                        '<input data-dojo-attach-point="dontShowAgainChk" id="dontShowAgainChk" data-dojo-type="dijit/form/CheckBox" /> <label for="dontShowAgainChk">Don\'t show this message again</label>' +
-                        '<br /><br />' +
-                        '<button data-dojo-attach-point="closeBtn" data-dojo-type="dijit/form/Button" type="button">Close</button>',
+                        "<div class='project-tooltip'>" +
+                            "<span>You are now in project: <strong>" + projectName + "</strong></span>" + description +
+                            "<div>" +
+                                "<input data-dojo-attach-point='dontShowAgainChk' id='dontShowAgainChk' data-dojo-type='dijit/form/CheckBox' /> <label for='dontShowAgainChk'>Don't show this message again</label>" +
+                            "</div>" +
+                            "<button class='close-button' data-dojo-attach-point='closeBtn' data-dojo-type='dijit/form/Button' type='button'>Close</button>" +
+                            "<div class='clearfix'></div>" +
+                        "</div>",
 
                     startup: function () {
                         this.inherited(arguments);
@@ -141,8 +145,8 @@ define([
                 if (tooltipVisible === "false") {
                     return;
                 }
-                when(this.profile.get("projects.last-tooltip")).then(function (tooltipShowDateStr) {
-                    this.profile.set("projects.last-tooltip", new Date().toString());
+                when(this.profile.get("projects.tooltip.last-show")).then(function (tooltipShowDateStr) {
+                    this.profile.set("projects.tooltip.last-show", new Date().toString());
 
                     if (tooltipShowDateStr) {
                         var tooltipDate = new Date(tooltipShowDateStr);
