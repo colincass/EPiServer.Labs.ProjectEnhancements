@@ -86,7 +86,7 @@ define([
 
             function showTooltip(projectName) {
                 var description = value && value.description ? "<span class='project-description'>" + value.description + "</span>" : "";
-
+                var dialog;
                 var CustomDialog = declare([TooltipDialog], {
                     baseClass: "project-tooltip",
 
@@ -119,7 +119,7 @@ define([
                     }
                 });
 
-                var dialog = new CustomDialog();
+                dialog = new CustomDialog();
                 dialog.startup();
 
                 popup.open({
