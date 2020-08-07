@@ -15,8 +15,6 @@
 
 .project-indicator {
     display: inline-block;
-    width: 10px;
-    height: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -24,16 +22,55 @@
     background: #c0c0c0;
 }
 
-label.epi-selector-list__title .project-indicator {
+.project-list-categories-container .project-indicator {
+    max-width: 80px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 4px;
     margin-left: 0;
     margin-right: 4px;
 }
 
 .epi-project-mode-toolbar__selector .project-indicator {
+    width: 10px;
+    height: 10px;
+
     margin-left: 0;
     margin-right: 4px;
 }
 
+.project-tooltip .dijitTooltipContainer {
+    padding: 16px;
+}
+
+.Sleek .dijitPopup.project-tooltipPopup {
+    box-shadow: none;
+}
+
 .epi-user-role-selector.epi-approval-step .dgrid-content {
     margin-top: 0;
+}
+
+.project-category-dialog .dijitMenu {
+    border: none;
+}
+
+.project-category-dialog .dijitMenu .dijitMenuItemLabel {
+    max-width: 300px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.project-tooltip .project-description {
+    display: block;
+    padding: 4px 0 8px 0;
+    font-style: italic;
+    color: #777;
+}
+
+.project-tooltip .close-button {
+    float: right;
+    margin-top: 16px;
 }

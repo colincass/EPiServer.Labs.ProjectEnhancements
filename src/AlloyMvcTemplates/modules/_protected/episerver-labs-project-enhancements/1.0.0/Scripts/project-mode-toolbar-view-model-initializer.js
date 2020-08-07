@@ -26,7 +26,7 @@ define([
         ProjectModeToolbarViewModel.prototype._clearProjectStats = function () {
             var result = originalClearProjectStatus.apply(this, arguments);
 
-            result = Object.assign({}, result, { description: "", categories: [] });
+            result = Object.assign({}, result, { description: "", categories: [], visibleTo: [] });
 
             return result;
         };

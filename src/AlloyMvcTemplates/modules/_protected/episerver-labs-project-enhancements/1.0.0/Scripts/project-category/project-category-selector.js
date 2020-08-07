@@ -32,7 +32,7 @@ define([
         templateString: "<div class='dijitInline' tabindex='-1' role='presentation'>\
                             <div data-dojo-attach-point='stateNode, tooltipNode'>\
                                 <div data-dojo-attach-point='selectButton' data-dojo-type='dijit.form.DropDownButton' data-dojo-attach-event='onMouseDown:onMenuShow'>\
-                                    <div data-dojo-type='dijit/TooltipDialog'>\
+                                    <div class='project-category-dialog' data-dojo-type='dijit/TooltipDialog'>\
                                         <div data-dojo-attach-point='menu' data-dojo-type='dijit.DropDownMenu' id='product-category-menu'>\
                                         </div>\
                                         <div><button data-dojo-type='dijit.form.Button' type='button' data-dojo-attach-event='onClick:onSaveCategories'>Ok</button></div>\
