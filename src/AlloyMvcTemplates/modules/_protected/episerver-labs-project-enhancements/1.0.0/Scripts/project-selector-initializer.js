@@ -7,7 +7,7 @@ define([
     ProjectSelector,
     ProjectSelectorList
 ) {
-    function addCategories (item, parentEl) {
+    function addCategories(item, parentEl) {
         if (!item || !item.categories) {
             return;
         }
@@ -29,7 +29,7 @@ define([
 
 
     // Add description to project selector
-    function initializeProjectSelectorList () {
+    function initializeProjectSelectorList() {
         var originalRenderRow = ProjectSelectorList.prototype.renderRow;
 
         ProjectSelectorList.prototype.renderRow = function (item, options) {
@@ -48,7 +48,7 @@ define([
             addCategories(item, labelEl);
 
             return originalResult;
-        }
+        };
 
         ProjectSelectorList.prototype.renderRow.nom = "renderRow";
     }
@@ -61,9 +61,9 @@ define([
             var originalResult = originalSetValue.apply(this, arguments);
 
             this.updateCategories(this.value);
-            
+
             return originalResult;
-        }
+        };
 
         ProjectSelector.prototype._setValueAttr.nom = "_setValueAttr";
 
@@ -73,12 +73,12 @@ define([
             }, this);
 
             addCategories(value, this.containerNode);
-        }
+        };
     }
 
     return function () {
         initializeProjectSelectorList();
         initializeProjectSelector();
-    }
+    };
 });
 

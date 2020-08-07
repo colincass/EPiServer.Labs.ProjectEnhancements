@@ -15,5 +15,5 @@ define([
             routes.getRestPath({ moduleArea: "episerver-labs-project-enhancements", storeName: "extended-project" }),
             { queryEngine: configurableQueryEngine, realtimeInfo: { subscriptionKey: "/episerver/cms/project" } }
         );
-    }
+    };
 });

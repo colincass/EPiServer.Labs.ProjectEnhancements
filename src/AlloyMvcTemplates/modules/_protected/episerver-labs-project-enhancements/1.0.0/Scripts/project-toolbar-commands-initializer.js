@@ -61,6 +61,6 @@ define([
             return originalResult;
         };
         ProjectToolbarViewModel.prototype._createCommands.nom = "_createCommands";
-    }
+    };
 });
 

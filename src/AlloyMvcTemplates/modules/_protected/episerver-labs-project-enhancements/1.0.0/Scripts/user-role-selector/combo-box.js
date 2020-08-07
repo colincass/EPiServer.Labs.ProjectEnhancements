@@ -3,7 +3,7 @@ define([
     "dojo/_base/lang",
     "dojo/keys",
     "epi-cms/content-approval/viewmodels/ReviewerViewModel",
-    "dijit/form/ComboBox",
+    "dijit/form/ComboBox"
 ], function (
     declare,
     lang,

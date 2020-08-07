@@ -56,7 +56,7 @@ define([
 
             this.own(
                 this.on(".epi-reviewer__remove-button:click", this._removeUserRole.bind(this)),
-                this.on("keydown", this._removeUserRole.bind(this)),
+                this.on("keydown", this._removeUserRole.bind(this))
             );
         },
 

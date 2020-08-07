@@ -79,7 +79,7 @@ define([
             this.searchBox = new ComboBox({
                 labelAttr: "displayName",
                 queryExpr: "${0}",
-                query: {includeRoles: true},
+                query: { includeRoles: true },
                 store: userStore,
                 searchAttr: "name",
                 autoComplete: false,

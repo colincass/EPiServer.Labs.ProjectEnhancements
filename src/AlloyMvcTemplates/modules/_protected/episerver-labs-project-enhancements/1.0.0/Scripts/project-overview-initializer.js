@@ -9,7 +9,7 @@ define([
     Overview,
     OverviewViewModel
 ) {
-    function ensureProjectDescriptionNode (projectNode) {
+    function ensureProjectDescriptionNode(projectNode) {
         var parentElement = projectNode.parentElement.parentElement; // div.epi-project-overview__toolbar
         var descriptionEl = parentElement.querySelector(".project-overview-description");
         if (!descriptionEl) {
@@ -20,7 +20,7 @@ define([
         return descriptionEl;
     }
 
-    function overrideOverview () {
+    function overrideOverview() {
         Overview.prototype._setProjectDescriptionAttr = function (value) {
             var descriptionEl = ensureProjectDescriptionNode(this.projectNameNode);
             descriptionEl.innerText = value;
@@ -28,9 +28,9 @@ define([
         Overview.prototype._setProjectDescriptionAttr.nom = "_setProjectDescriptionAttr";
 
         Overview.prototype.modelBindingMap.projectDescription = ["projectDescription"];
-    };
+    }
 
-    function overrideOverviewViewModel () {
+    function overrideOverviewViewModel() {
         var originalUpdateSelectedProjectDependencies = OverviewViewModel.prototype._updateSelectedProjectDependencies;
 
         OverviewViewModel.prototype._updateSelectedProjectDependencies = function (selectedProject) {
@@ -45,14 +45,14 @@ define([
                     }
                 }.bind(this));
             }
-        }
+        };
 
         OverviewViewModel.prototype._updateSelectedProjectDependencies.nom = "_updateSelectedProjectDependencies";
-    };
+    }
 
     return function () {
         overrideOverview();
         overrideOverviewViewModel();
-    }
+    };
 });
 

@@ -37,6 +37,6 @@ define([
 
             ProjectNotification.prototype._attachProjectNameClickEvent.nom = "_attachProjectNameClickEvent";
         }
-    }
+    };
 });
 

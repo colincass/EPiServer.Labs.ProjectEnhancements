@@ -15,8 +15,8 @@ define([
             this.metadata = metadataManager.getMetadataForType("EPiServer.Labs.ProjectEnhancements.ExtendedProjectViewModel");
 
             originalPostMixinProperties.apply(this, arguments);
-        }
+        };
 
         ProjectDialogContent.prototype.postMixInProperties.nom = "postMixInProperties";
-    }
+    };
 });

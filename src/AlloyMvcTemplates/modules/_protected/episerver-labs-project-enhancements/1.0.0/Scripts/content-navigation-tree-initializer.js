@@ -27,9 +27,9 @@ define([
                 this.labelNode.appendChild(projectsContainerEl);
             }
             return originalResult;
-        }
+        };
 
         _ContentNavigationTreeNode.prototype._updateIndividualLayout.nom = "_updateIndividualLayout";
-    }
+    };
 });
 
