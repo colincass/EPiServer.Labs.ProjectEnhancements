@@ -24,10 +24,29 @@ define([
     ProjectSelectorList
 ) {
     function addCategories(item, parentEl, asLabels) {
-        if (!item || !item.categories) {
+        if (!this._categoriesCache) {
+            this._categoriesCache = {};
+        }
+
+        if (!item) {
             return;
         }
-        var categories = item.categories.split(",");
+
+        var itemCategories;
+        if (typeof item.categories === "undefined") {
+            // sometimes value is updated from projectService, which works on original store and categories are not available
+            // then refreshing categories with last value
+            itemCategories = this._categoriesCache[item.name];
+        } else {
+            itemCategories = item.categories;
+            this._categoriesCache[item.name] = itemCategories;
+        }
+
+        if (!itemCategories) {
+            return;
+        }
+
+        var categories = itemCategories.split(",");
         categories.forEach(function (category) {
             var categoryItem = ApplicationSettings.projectCategories.filter(function (c) {
                 return c.id === category;

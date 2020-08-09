@@ -61,9 +61,7 @@ define([
 
             // categories should be reloaded when editing project
             this.own(this.model.watch("currentProject", function (property, oldValue, newValue) {
-                if (newValue && typeof newValue.categories !== "undefined") {
-                    this.projectSelector.updateCategories(newValue);
-                }
+                this.projectSelector.updateCategories(newValue);
             }.bind(this)));
         };
 
