@@ -18,6 +18,7 @@ namespace AlloyTemplates.Business.Initialization
                     //x.ShowDescription = false;
                     //x.ShowCategories = false;
                     //x.ShowNotificationTooltip = false;
+                    //x.ShowSelectedProjectTooltip = false;
                 });
             };
         }

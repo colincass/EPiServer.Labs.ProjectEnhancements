@@ -35,8 +35,11 @@ define([
 
             storeInitializer();
 
+            if (options.showDescription || options.showCategories || options.showSelectedProjectTooltip) {
+                projectSelectorInitializer(options.showDescription, options.showCategories, options.showSelectedProjectTooltip);
+            }
+
             if (options.showDescription || options.showCategories) {
-                projectSelectorInitializer();
                 projectToolbarCommandsInitializer();
                 projectDialogContentInitializer();
                 projectModeToolbarViewModelInitializer();

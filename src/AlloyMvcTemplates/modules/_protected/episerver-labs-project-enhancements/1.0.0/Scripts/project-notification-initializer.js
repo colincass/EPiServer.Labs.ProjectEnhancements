@@ -9,7 +9,7 @@ define([
     epiUsername,
     ProjectNotification
 ) {
-    // Show tooltip with user information on project link
+    // Show tooltip over project link in the notification bar
 
     return function () {
         if (ProjectNotification.prototype._attachProjectNameClickEvent) {

@@ -72,39 +72,48 @@ define([
 
 
     // Add description to project selector
-    function initializeProjectSelectorList() {
+    function initializeProjectSelectorList(showDescriptionEnabled, showCategoriesEnabled) {
         var originalRenderRow = ProjectSelectorList.prototype.renderRow;
 
-        ProjectSelectorList.prototype.renderRow = function (item, options) {
-            var originalResult = originalRenderRow.apply(this, arguments);
-            if (item.description) {
-                var descriptionEl = document.createElement("div");
-                descriptionEl.classList.add("epi-selector-list__description", "dojoxEllipsis");
-                descriptionEl.title = item.description;
-                var descriptionTextEl = document.createTextNode(item.description);
-                descriptionEl.appendChild(descriptionTextEl);
+        if (showDescriptionEnabled || showCategoriesEnabled) {
+            ProjectSelectorList.prototype.renderRow = function (item, options) {
+                var originalResult = originalRenderRow.apply(this, arguments);
+                if (showDescriptionEnabled && item.description) {
+                    var descriptionEl = document.createElement("div");
+                    descriptionEl.classList.add("epi-selector-list__description", "dojoxEllipsis");
+                    descriptionEl.title = item.description;
+                    var descriptionTextEl = document.createTextNode(item.description);
+                    descriptionEl.appendChild(descriptionTextEl);
 
-                originalResult.appendChild(descriptionEl);
-            }
+                    originalResult.appendChild(descriptionEl);
+                }
 
-            var categoriesEl = document.createElement("div");
-            categoriesEl.classList.add("project-list-categories-container");
-            originalResult.appendChild(categoriesEl);
-            addCategories(item, categoriesEl, true);
+                if (showCategoriesEnabled) {
+                    var categoriesEl = document.createElement("div");
+                    categoriesEl.classList.add("project-list-categories-container");
+                    originalResult.appendChild(categoriesEl);
+                    addCategories(item, categoriesEl, true);
+                }
 
-            return originalResult;
-        };
-        ProjectSelectorList.prototype.renderRow.nom = "renderRow";
+                return originalResult;
+            };
+            ProjectSelectorList.prototype.renderRow.nom = "renderRow";
+        }
     }
 
-    function initializeProjectSelector() {
+    function initializeProjectSelector(showDescriptionEnabled, showCategoriesEnabled, showTooltipOptionEnabled) {
         ProjectSelector.prototype.showTooltip = function (value) {
             // show tooltip after after page was refreshed
 
+            if (!showTooltipOptionEnabled) {
+                return;
+            }
+
             var self = this;
 
+            // show popover with information about current project
             function showTooltip(projectName) {
-                var description = value && value.description ? "<span class='project-description'>" + value.description + "</span>" : "";
+                var description = showDescriptionEnabled && value && value.description ? "<span class='project-description'>" + value.description + "</span>" : "";
                 var dialog;
                 var CustomDialog = declare([TooltipDialog], {
                     baseClass: "project-tooltip",
@@ -185,7 +194,9 @@ define([
 
         ProjectSelector.prototype._setValueAttr = function (value) {
             var originalResult = originalSetValue.apply(this, arguments);
-            this.updateCategories(this.value);
+            if (showCategoriesEnabled) {
+                this.updateCategories(this.value);
+            }
             this.showTooltip(value);
             return originalResult;
         };
@@ -200,21 +211,23 @@ define([
             addCategories(value, this.containerNode);
         };
 
-        // show message when refresh the page to let user know that he is in project
-        var originalStartup = ProjectSelector.prototype.startup;
-        ProjectSelector.prototype.startup = function () {
-            // original startup method calls set("value", null), we don't want to show tooltip then
-            // but after the velue was set
+        if (showTooltipOptionEnabled) {
+            // show message when refresh the page to let user know that he is in project
+            var originalStartup = ProjectSelector.prototype.startup;
+            ProjectSelector.prototype.startup = function () {
+                // original startup method calls set("value", null), we don't want to show tooltip then
+                // but after the velue was set
 
-            this._showTooltip = false;
-            originalStartup.apply(this, arguments);
-            this._showTooltip = true;
-        };
-        ProjectSelector.prototype.startup.nom = "startup";
+                this._showTooltip = false;
+                originalStartup.apply(this, arguments);
+                this._showTooltip = true;
+            };
+            ProjectSelector.prototype.startup.nom = "startup";
+        }
     }
 
-    return function () {
-        initializeProjectSelectorList();
-        initializeProjectSelector();
+    return function (showDescriptionEnabled, showCategoriesEnabled, showTooltipOptionEnabled) {
+        initializeProjectSelectorList(showDescriptionEnabled, showCategoriesEnabled);
+        initializeProjectSelector(showDescriptionEnabled, showCategoriesEnabled, showTooltipOptionEnabled);
     };
 });
