@@ -32,7 +32,7 @@ Install-Package EPiServer.Labs.ProjectEnhancements
 ## Page tree indicator
 
 With this feature Editor will see which items belongs to current project.
-All pages that are part of current project will be indicated using ![Page tree indicator](assets/docsimages/page_tree_indicator_icon.png) icon.
+All pages that are part of current project will be indicated using ![Page tree indicator](assets/docsimages/project_tree_indicator_icon.png) icon.
 
 ![Page tree indicator](assets/docsimages/page_tree_indicator.png)
 
@@ -49,22 +49,27 @@ That why, after Editor logs in, we will display tooltip with current project inf
 Using this feature Editor will be able to add short description about the 
 purpose of the project.
 
-The description can be set in project edit dialog: 
+The description can be set in project edit dialog:
+
 ![Project dialog](assets/docsimages/project_description_dialog.png)
 
 And then it's diaplyed on project overview:
+
 ![Project dialog overview](assets/docsimages/project_description_overview.png)
 
 and in the project selector list:
+
 ![Project dialog list](assets/docsimages/project_description_list.png)
 
 ## Project categories
 
-PRoject categoies feature is similar to project description. 
+Project categoies feature is similar to project description. 
 It allows Editor to categorize projects. 
+
 ![Project categories](assets/docsimages/project_categories.png)
 
 Categories are displayed in project selector:
+
 ![Project categories list](assets/docsimages/project_categories_list.png)
 
 To configure categories you need to implement `IProjectCategoriesDataSource` interface
