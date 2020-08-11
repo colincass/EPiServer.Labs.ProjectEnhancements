@@ -64,6 +64,14 @@ namespace EPiServer.Labs.ProjectEnhancements
                         metadataProperty.ShowForEdit = false;
                     }
                 }
+
+                if (metadataProperty.PropertyName == nameof(ExtendedProjectViewModel.VisibleTo))
+                {
+                    if (!_options.ShowVisibleTo)
+                    {
+                        metadataProperty.ShowForEdit = false;
+                    }
+                }
             }
         }
     }

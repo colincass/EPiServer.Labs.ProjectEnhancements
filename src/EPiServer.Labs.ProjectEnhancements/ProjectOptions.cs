@@ -22,6 +22,11 @@ namespace EPiServer.Labs.ProjectEnhancements
         public bool ShowCategories { get; set; } = true;
 
         /// <summary>
+        /// When true, then projects list will be filtered by access rights
+        /// </summary>
+        public bool ShowVisibleTo { get; set; }
+
+        /// <summary>
         /// When true, then notification tooltip with project information is available
         /// </summary>
         public bool ShowNotificationTooltip { get; set; } = true;

@@ -21,24 +21,26 @@ namespace EPiServer.Labs.ProjectEnhancements
         private readonly IProjectEnhancementsStore _projectEnhancementsStore;
         private readonly IObjectSerializer _objectSerializer;
         private readonly UIRoleProvider _roleProvider;
+        private readonly ProjectOptions _projectOptions;
 
         public ExtendedProjectStore(ProjectRepository projectRepository,
             ViewModelConverter viewModelConverter,
             IProjectEnhancementsStore projectEnhancementsStore,
-            IObjectSerializerFactory objectSerializerFactory, UIRoleProvider roleProvider)
+            IObjectSerializerFactory objectSerializerFactory,
+            UIRoleProvider roleProvider,
+            ProjectOptions projectOptions)
         {
             _projectRepository = projectRepository;
             _viewModelConverter = viewModelConverter;
             _projectEnhancementsStore = projectEnhancementsStore;
             _roleProvider = roleProvider;
+            _projectOptions = projectOptions;
             _objectSerializer = objectSerializerFactory.GetSerializer(KnownContentTypes.Json);
         }
 
         [HttpGet]
         public virtual ActionResult Get(int? id, ItemRange range, IEnumerable<SortColumn> sortColumns)
         {
-            var currentUser = PrincipalInfo.CurrentPrincipal.Identity.Name;
-            var currentUserRoles = _roleProvider.GetRolesForUser(currentUser).ToList();
             // If there is no id then return all the projects within the given range.
             if (!id.HasValue)
             {
@@ -52,7 +54,14 @@ namespace EPiServer.Labs.ProjectEnhancements
                     projects = projects.AsQueryable().OrderBy(sortColumns).ToList();
                 }
 
-                return Rest(projects.Where(x => IsProjectAvailable(x, currentUser, currentUserRoles)), range);
+                if (_projectOptions.ShowVisibleTo)
+                {
+                    var currentUser = PrincipalInfo.CurrentPrincipal.Identity.Name;
+                    var currentUserRoles = _roleProvider.GetRolesForUser(currentUser).ToList();
+                    projects = projects.Where(x => IsProjectAvailable(x, currentUser, currentUserRoles)).ToList();
+                }
+
+                return Rest(projects, range);
             }
 
             // Otherwise get the project by id.
@@ -65,9 +74,14 @@ namespace EPiServer.Labs.ProjectEnhancements
 
             var extendedProjectViewModel = _viewModelConverter.ToViewModel(project);
             AddExtendedFields(extendedProjectViewModel);
-            if (!IsProjectAvailable(extendedProjectViewModel, currentUser, currentUserRoles))
+            if (_projectOptions.ShowVisibleTo)
             {
-                return new RestStatusCodeResult(HttpStatusCode.Forbidden);
+                var currentUser = PrincipalInfo.CurrentPrincipal.Identity.Name;
+                var currentUserRoles = _roleProvider.GetRolesForUser(currentUser).ToList();
+                if (!IsProjectAvailable(extendedProjectViewModel, currentUser, currentUserRoles))
+                {
+                    return new RestStatusCodeResult(HttpStatusCode.Forbidden);
+                }
             }
 
             return Rest(extendedProjectViewModel);
