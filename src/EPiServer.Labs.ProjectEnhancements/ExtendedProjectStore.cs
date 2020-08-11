@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using EPiServer.Approvals;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using EPiServer.Framework.Serialization;
+using EPiServer.Security;
+using EPiServer.Shell.Security;
 using EPiServer.Shell.Services.Rest;
 
 namespace EPiServer.Labs.ProjectEnhancements
@@ -15,19 +19,26 @@ namespace EPiServer.Labs.ProjectEnhancements
         private readonly ProjectRepository _projectRepository;
         private readonly ViewModelConverter _viewModelConverter;
         private readonly IProjectEnhancementsStore _projectEnhancementsStore;
+        private readonly IObjectSerializer _objectSerializer;
+        private readonly UIRoleProvider _roleProvider;
 
         public ExtendedProjectStore(ProjectRepository projectRepository,
             ViewModelConverter viewModelConverter,
-            IProjectEnhancementsStore projectEnhancementsStore)
+            IProjectEnhancementsStore projectEnhancementsStore,
+            IObjectSerializerFactory objectSerializerFactory, UIRoleProvider roleProvider)
         {
             _projectRepository = projectRepository;
             _viewModelConverter = viewModelConverter;
             _projectEnhancementsStore = projectEnhancementsStore;
+            _roleProvider = roleProvider;
+            _objectSerializer = objectSerializerFactory.GetSerializer(KnownContentTypes.Json);
         }
 
         [HttpGet]
         public virtual ActionResult Get(int? id, ItemRange range, IEnumerable<SortColumn> sortColumns)
         {
+            var currentUser = PrincipalInfo.CurrentPrincipal.Identity.Name;
+            var currentUserRoles = _roleProvider.GetRolesForUser(currentUser).ToList();
             // If there is no id then return all the projects within the given range.
             if (!id.HasValue)
             {
@@ -41,7 +52,7 @@ namespace EPiServer.Labs.ProjectEnhancements
                     projects = projects.AsQueryable().OrderBy(sortColumns).ToList();
                 }
 
-                return Rest(projects, range);
+                return Rest(projects.Where(x => IsProjectAvailable(x, currentUser, currentUserRoles)), range);
             }
 
             // Otherwise get the project by id.
@@ -54,7 +65,38 @@ namespace EPiServer.Labs.ProjectEnhancements
 
             var extendedProjectViewModel = _viewModelConverter.ToViewModel(project);
             AddExtendedFields(extendedProjectViewModel);
+            if (!IsProjectAvailable(extendedProjectViewModel, currentUser, currentUserRoles))
+            {
+                return new RestStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
             return Rest(extendedProjectViewModel);
+        }
+
+        private bool IsProjectAvailable(ExtendedProjectViewModel projectViewModel, string currentUser, ICollection<string> currentUserRoles)
+        {
+            try
+            {
+                var visibleTo = _objectSerializer.Deserialize<IList<UserRole>>(projectViewModel.VisibleTo);
+                foreach (var userRole in visibleTo)
+                {
+                    if (userRole.ReviewerType == ApprovalDefinitionReviewerType.User && userRole.Name == currentUser)
+                    {
+                        return true;
+                    }
+
+                    if (currentUserRoles.Contains(userRole.Name))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void AddExtendedFields(ExtendedProjectViewModel projectViewModel)
@@ -75,7 +117,7 @@ namespace EPiServer.Labs.ProjectEnhancements
             var settings = _projectEnhancementsStore.LoadAll().ToList();
             foreach (var extendedProjectViewModel in projects)
             {
-                var projectSettings = settings.FirstOrDefault(x=>x.ProjectId == extendedProjectViewModel.Id);
+                var projectSettings = settings.FirstOrDefault(x => x.ProjectId == extendedProjectViewModel.Id);
                 if (projectSettings != null)
                 {
                     extendedProjectViewModel.Description = projectSettings.Description;
@@ -140,7 +182,7 @@ namespace EPiServer.Labs.ProjectEnhancements
                 projectViewModel.Id = project.ID;
 
                 SaveProjectSettings(projectViewModel);
-                return new RestStatusCodeResult(HttpStatusCode.Created) { Data = projectViewModel };
+                return new RestStatusCodeResult(HttpStatusCode.Created) {Data = projectViewModel};
             }
             catch (EPiServerException e)
             {
