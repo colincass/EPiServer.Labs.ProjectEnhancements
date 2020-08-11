@@ -10,6 +10,7 @@ define([
     "./project-notification-initializer",
     "./content-navigation-tree-initializer",
     "./project-overview-initializer",
+    "./tracker",
 
     "xstyle/css!./extended-projects.css"
 ], function (
@@ -24,7 +25,8 @@ define([
     projectModeToolbarViewModelInitializer,
     projectNotificationInitializer,
     contentNavigationTreeInitializer,
-    projectOverviewInitializer
+    projectOverviewInitializer,
+    tracker
 ) {
     return declare([_Module], {
         initialize: function () {
@@ -56,6 +58,8 @@ define([
             if (options.showPageTreeIndicator) {
                 contentNavigationTreeInitializer();
             }
+
+            tracker.trackEvent("options", options);
         }
     });
 });

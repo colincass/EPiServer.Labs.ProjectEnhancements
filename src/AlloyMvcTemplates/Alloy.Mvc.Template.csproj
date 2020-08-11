@@ -436,6 +436,7 @@
     <Content Include="favicon.ico" />
     <Content Include="libman.json" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\content-navigation-tree-initializer.js" />
+    <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\tracker.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\initializer.js" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\extended-projects.css" />
     <Content Include="modules\_protected\episerver-labs-project-enhancements\1.0.0\Scripts\project-mode-toolbar-view-model-initializer.js" />
