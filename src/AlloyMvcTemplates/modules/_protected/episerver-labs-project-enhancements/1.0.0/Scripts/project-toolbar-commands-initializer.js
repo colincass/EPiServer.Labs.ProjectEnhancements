@@ -39,7 +39,7 @@ define([
     });
 
     var ExtendedAddProjectCommand = declare([AddProject], {
-        dialogClass: "epi-dialog-portraint extended-projects-dialog"
+        dialogClass: "epi-dialog-portrait extended-projects-dialog"
     });
 
 
