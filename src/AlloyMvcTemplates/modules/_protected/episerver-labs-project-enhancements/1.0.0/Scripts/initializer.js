@@ -37,8 +37,8 @@ define([
 
             storeInitializer();
 
-            if (options.showDescription || options.showCategories || options.showSelectedProjectTooltip) {
-                projectSelectorInitializer(options.showDescription, options.showCategories, options.showSelectedProjectTooltip);
+            if (options.showDescription || options.showCategories || options.showSelectedProjectPopup) {
+                projectSelectorInitializer(options.showDescription, options.showCategories, options.splithowSelectedProjectPopup);
             }
 
             if (options.showDescription || options.showCategories) {

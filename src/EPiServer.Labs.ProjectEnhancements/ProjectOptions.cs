@@ -35,6 +35,6 @@ namespace EPiServer.Labs.ProjectEnhancements
         /// When true, then tooltip about selected project is displayed
         /// after user login to Edit Mode
         /// </summary>
-        public bool ShowSelectedProjectTooltip { get; set; } = true;
+        public bool ShowSelectedProjectPopup { get; set; } = true;
     }
 }
