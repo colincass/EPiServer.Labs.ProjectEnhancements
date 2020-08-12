@@ -6,6 +6,7 @@ define([
     "epi-cms/project/command/AddProject",
     "epi-cms/project/command/RenameProject",
     "epi-cms/project/viewmodels/ProjectModeToolbarViewModel",
+    "./tracker",
     "epi/i18n!epi/cms/nls/episerver.shared.action"
 ], function (
     declare,
@@ -15,8 +16,20 @@ define([
     AddProject,
     RenameProject,
     ProjectToolbarViewModel,
+    tracker,
     actionStrings
 ) {
+    function trackProjectCommand(trackerName, project) {
+        var data = {};
+        if (project) {
+            data.description = !!project.description;
+            data.categories = (project.categories || "").split(",").length;
+            data.visibleTo = project.visibleTo !== "[]" && !!project.visibleTo;
+        }
+
+        tracker.trackEvent(trackerName, data);
+    }
+
     // Rename "Rename" command to "Edit"
     var ExtendedProjectRenameCommand = declare([RenameProject], {
         label: actionStrings.edit,
@@ -35,11 +48,24 @@ define([
                 this.set("value", extendedProject);
                 this.inherited(currentArgs);
             }.bind(this));
+        },
+
+        onDialogExecute: function () {
+            this.inherited(arguments);
+
+            trackProjectCommand("edit", this.value);
         }
     });
 
     var ExtendedAddProjectCommand = declare([AddProject], {
-        dialogClass: "epi-dialog-portrait extended-projects-dialog"
+        dialogClass: "epi-dialog-portrait extended-projects-dialog",
+
+        onDialogExecute: function () {
+            this.inherited(arguments);
+
+            var value = this.dialogContent.get("value");
+            trackProjectCommand("create", value);
+        }
     });
 
 
