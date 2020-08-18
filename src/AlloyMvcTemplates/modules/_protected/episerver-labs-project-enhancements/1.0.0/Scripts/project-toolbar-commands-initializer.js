@@ -23,7 +23,7 @@ define([
         var data = {};
         if (project) {
             data.description = !!project.description;
-            data.categories = (project.categories || "").split(",").length;
+            data.categories = project.categories ? project.categories.split(",").length : 0;
             data.visibleTo = project.visibleTo !== "[]" && !!project.visibleTo;
         }
 
