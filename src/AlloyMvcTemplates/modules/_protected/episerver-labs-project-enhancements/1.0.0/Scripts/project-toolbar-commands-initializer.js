@@ -33,6 +33,7 @@ define([
     // Rename "Rename" command to "Edit"
     var ExtendedProjectRenameCommand = declare([RenameProject], {
         label: actionStrings.edit,
+        title: actionStrings.edit,
         iconClass: "epi-iconPen",
         dialogClass: "epi-dialog-portraint extended-projects-dialog",
 
