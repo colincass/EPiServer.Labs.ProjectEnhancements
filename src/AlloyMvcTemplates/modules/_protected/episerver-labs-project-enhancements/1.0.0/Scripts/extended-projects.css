@@ -31,12 +31,16 @@
     background: #c0c0c0;
 }
 
+.project-list-categories-container {
+    margin-left: 8px 0 0 28px;
+}
+
 .project-list-categories-container .project-indicator {
     max-width: 80px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    padding: 0 4px;
+    padding: 4px  8px 6px 8px;
     margin-left: 0;
     margin-right: 4px;
 }
@@ -84,3 +88,4 @@
     float: right;
     margin-top: 16px;
 }
+8
