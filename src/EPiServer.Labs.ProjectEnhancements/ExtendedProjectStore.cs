@@ -92,6 +92,11 @@ namespace EPiServer.Labs.ProjectEnhancements
             try
             {
                 var visibleTo = _objectSerializer.Deserialize<IList<UserRole>>(projectViewModel.VisibleTo);
+                if (visibleTo.Count == 0 || projectViewModel.CreatedBy.Equals(currentUser))
+                {
+                    return true;
+                }
+
                 foreach (var userRole in visibleTo)
                 {
                     if (userRole.ReviewerType == ApprovalDefinitionReviewerType.User && userRole.Name == currentUser)
@@ -109,7 +114,7 @@ namespace EPiServer.Labs.ProjectEnhancements
             }
             catch
             {
-                return false;
+                return true;
             }
         }
 
