@@ -1,5 +1,6 @@
 .extended-projects-dialog textarea.dijitTextBox {
     margin: 0;
+    max-height: 100px;
 }
 
 .extended-projects-dialog .dijitDialogPaneContentArea.dijitDialogSingleChild {
@@ -20,6 +21,9 @@
     color: #777;
     font-size: 13px;
     margin-bottom: 8px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .project-indicator {
@@ -88,4 +92,3 @@
     float: right;
     margin-top: 16px;
 }
-8

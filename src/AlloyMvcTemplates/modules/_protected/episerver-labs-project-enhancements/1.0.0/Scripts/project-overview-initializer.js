@@ -24,6 +24,7 @@ define([
         Overview.prototype._setProjectDescriptionAttr = function (value) {
             var descriptionEl = ensureProjectDescriptionNode(this.projectNameNode);
             descriptionEl.innerText = value;
+            descriptionEl.title = value;
         };
         Overview.prototype._setProjectDescriptionAttr.nom = "_setProjectDescriptionAttr";
 
