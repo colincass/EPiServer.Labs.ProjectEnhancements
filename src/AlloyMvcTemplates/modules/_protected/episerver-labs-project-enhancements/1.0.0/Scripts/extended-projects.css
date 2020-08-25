@@ -11,6 +11,10 @@
     width: 13em;
 }
 
+.extended-projects-dialog .epi-form-container__section {
+    overflow-y: auto;
+}
+
 .project-indicator-tree-container>span {
     margin-left: 4px;
 }
