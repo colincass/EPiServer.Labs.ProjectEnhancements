@@ -157,6 +157,7 @@ public class ProjectOptionsInitialization : IConfigurableModule
                 options.ShowPageTreeIndicator = false;
                 options.ShowDescription = false;
                 options.ShowCategories = false;
+                options.ShowVisibleTo = false;
                 options.ShowNotificationTooltip = false;
                 options.ShowSelectedProjectPopup = false;
             });
