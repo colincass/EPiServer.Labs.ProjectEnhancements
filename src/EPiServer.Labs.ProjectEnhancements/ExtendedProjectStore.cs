@@ -142,14 +142,17 @@ namespace EPiServer.Labs.ProjectEnhancements
                     extendedProjectViewModel.Description = projectSettings.Description;
                     extendedProjectViewModel.Categories = projectSettings.Categories;
                     extendedProjectViewModel.VisibleTo = projectSettings.VisibleTo;
-                    if (projectSettings.LastChangedDate.HasValue)
+                    if (_projectOptions.ShowLastEditInfo)
                     {
-                        extendedProjectViewModel.Created = projectSettings.LastChangedDate.Value;
-                    }
+                        if (projectSettings.LastChangedDate.HasValue)
+                        {
+                            extendedProjectViewModel.Created = projectSettings.LastChangedDate.Value;
+                        }
 
-                    if (projectSettings.LastChangedBy != null)
-                    {
-                        extendedProjectViewModel.CreatedBy = projectSettings.LastChangedBy;
+                        if (projectSettings.LastChangedBy != null)
+                        {
+                            extendedProjectViewModel.CreatedBy = projectSettings.LastChangedBy;
+                        }
                     }
                 }
             }
@@ -223,6 +226,7 @@ namespace EPiServer.Labs.ProjectEnhancements
                 Categories = projectViewModel.Categories,
                 VisibleTo = projectViewModel.VisibleTo
             };
+            projectSettings.UpdateProjectEditInfo();
             _projectEnhancementsStore.Save(projectViewModel.Id, projectSettings);
         }
 

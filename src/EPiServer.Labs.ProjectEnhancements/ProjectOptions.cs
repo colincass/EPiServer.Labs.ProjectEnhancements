@@ -36,5 +36,11 @@ namespace EPiServer.Labs.ProjectEnhancements
         /// after user login to Edit Mode
         /// </summary>
         public bool ShowSelectedProjectPopup { get; set; } = true;
+
+        /// <summary>
+        /// When true, then project selector will display last edited by and last edited date
+        /// instead of created date and created by
+        /// </summary>
+        public bool ShowLastEditInfo { get; set; } = true;
     }
 }
