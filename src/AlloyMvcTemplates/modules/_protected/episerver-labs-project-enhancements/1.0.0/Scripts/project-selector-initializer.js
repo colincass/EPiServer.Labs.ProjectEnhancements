@@ -23,7 +23,11 @@ define([
     ProjectSelector,
     ProjectSelectorList
 ) {
-    function addCategories(item, parentEl, asLabels) {
+    function addCategories(showCategoriesEnabled, item, parentEl, asLabels) {
+        if (!showCategoriesEnabled) {
+            return;
+        }
+
         if (!this._categoriesCache) {
             this._categoriesCache = {};
         }
@@ -92,7 +96,7 @@ define([
                     var categoriesEl = document.createElement("div");
                     categoriesEl.classList.add("project-list-categories-container");
                     originalResult.appendChild(categoriesEl);
-                    addCategories(item, categoriesEl, true);
+                    addCategories(showCategoriesEnabled, item, categoriesEl, true);
                 }
 
                 return originalResult;
@@ -208,7 +212,7 @@ define([
                 this.containerNode.removeChild(el);
             }, this);
 
-            addCategories(value, this.containerNode);
+            addCategories(showCategoriesEnabled, value, this.containerNode);
         };
 
         if (showTooltipOptionEnabled) {
