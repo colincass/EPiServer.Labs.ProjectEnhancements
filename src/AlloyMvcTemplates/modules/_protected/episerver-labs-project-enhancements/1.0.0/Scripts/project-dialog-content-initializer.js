@@ -1,13 +1,15 @@
 define([
     "epi/dependency",
-    "epi-cms/project/ProjectDialogContent"
+    "epi-cms/project/ProjectDialogContent",
+    "epi/shell/widget/FormContainer"
 ], function (
     dependency,
-    ProjectDialogContent
+    ProjectDialogContent,
+    FormContainer
 ) {
     // load project edit form metadata from ExtendedProjectViewModel class
 
-    return function () {
+    return function (showDescription) {
         var originalPostMixinProperties = ProjectDialogContent.prototype.postMixInProperties;
 
         ProjectDialogContent.prototype.postMixInProperties = function () {
@@ -18,5 +20,12 @@ define([
         };
 
         ProjectDialogContent.prototype.postMixInProperties.nom = "postMixInProperties";
+
+        if (showDescription) {
+            // we override postCreate method with base implementation
+            // because ProjectDialogContent.prototype.postCreate contains code that close dialog on Enter key
+            // and because of that Editor can't add new lines in textarea
+            ProjectDialogContent.prototype.postCreate = FormContainer.prototype.postCreate;
+        }
     };
 });

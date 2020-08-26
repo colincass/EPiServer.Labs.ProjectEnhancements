@@ -43,7 +43,7 @@ define([
 
             if (options.showDescription || options.showCategories) {
                 projectToolbarCommandsInitializer();
-                projectDialogContentInitializer();
+                projectDialogContentInitializer(options.showDescription);
                 projectModeToolbarViewModelInitializer();
             }
 
